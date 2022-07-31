@@ -193,16 +193,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7ffc785a7a91b314fb3799b90b40ad70, type: 3}
   m_PrefabInstance: {fileID: 8661373025199602326}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &3164188142777403815 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6042164637270291249, guid: 7ffc785a7a91b314fb3799b90b40ad70, type: 3}
-  m_PrefabInstance: {fileID: 8661373025199602326}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8687187127908623241 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 53047359755180319, guid: 7ffc785a7a91b314fb3799b90b40ad70, type: 3}
-  m_PrefabInstance: {fileID: 8661373025199602326}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &125152447291738731 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -463939357721202435, guid: 7ffc785a7a91b314fb3799b90b40ad70, type: 3}
@@ -222,19 +212,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 887768672449436883, guid: 7ffc785a7a91b314fb3799b90b40ad70, type: 3}
---- !u!65 &8256149310463668184
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3164188142777403815}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.9639442, y: 4.670426, z: 18.094482}
-  m_Center: {x: -0.38060415, y: -1.2338227, z: 5.2491503}
 --- !u!114 &4439908529996248803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,16 +225,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   point: {fileID: 6514584909716633525}
---- !u!65 &8890810646510649791
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8687187127908623241}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.9343896, y: 4.939995, z: 18.030258}
-  m_Center: {x: -0.365826, y: 1.1055048, z: 5.2812366}

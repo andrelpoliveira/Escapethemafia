@@ -157,16 +157,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2227e66e27eded445bed53f97f3f610c, type: 3}
   m_PrefabInstance: {fileID: 895203992644865018}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7758846511461876398 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7476136470784051540, guid: 2227e66e27eded445bed53f97f3f610c, type: 3}
-  m_PrefabInstance: {fileID: 895203992644865018}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &228455291136569777 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -8122306070273377717, guid: 2227e66e27eded445bed53f97f3f610c, type: 3}
-  m_PrefabInstance: {fileID: 895203992644865018}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5710455029309901184 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4371873934811348358, guid: 2227e66e27eded445bed53f97f3f610c, type: 3}
@@ -185,19 +175,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   point: {fileID: 5477407722717787700}
---- !u!65 &8622455334473845861
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 228455291136569777}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 9.899288, y: 15.299147, z: 10.37848}
-  m_Center: {x: 0.041423798, y: -0.14326859, z: 0.62656313}
 --- !u!65 &454185791250128913
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -211,16 +188,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 15.000004, y: 10.000005, z: 0.20000078}
   m_Center: {x: 0.000002146264, y: -4.9676935e-10, z: -0.016666673}
---- !u!65 &5180536698979772165
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7758846511461876398}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 12.239026, y: 15.350271, z: 11.743947}
-  m_Center: {x: -2.077911, y: -0.35135078, z: -1.4982787}
