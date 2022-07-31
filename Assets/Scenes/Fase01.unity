@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.6889643, g: 0.63478863, b: 0.5577142, a: 1}
+  m_IndirectSpecularColor: {r: 0.44993204, g: 0.497298, b: 0.5610761, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -310,8 +310,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_RenderShadows: 1
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
@@ -538,8 +538,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d47596ed96c40cd4d9d80fd93fd41d4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   platforms:
   - {fileID: 3862344906368242584, guid: 6a880ce426b96064791f4efa6875a1cd, type: 3}
   - {fileID: 5226431417734232551, guid: 2a58884590cc7d340b6d1163678f4dd4, type: 3}
@@ -599,11 +599,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef115896fe2120b4abdd6b11616f9d4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   _characterController: {fileID: 0}
-  speed: 8
-  jumpHeight: 5
+  speed: 10
+  jumpHeight: 10
   gravity: 1
 --- !u!143 &1724495943
 CharacterController:
@@ -666,8 +666,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   isGlobal: 1
   priority: 0
   blendDistance: 0
@@ -816,41 +816,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 12723648608792518, guid: 6a880ce426b96064791f4efa6875a1cd, type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 12723648608792518, guid: 6a880ce426b96064791f4efa6875a1cd, type: 3}
-      propertyPath: m_ReceiveShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2987747939278554153, guid: 6a880ce426b96064791f4efa6875a1cd, type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2987747939278554153, guid: 6a880ce426b96064791f4efa6875a1cd, type: 3}
-      propertyPath: m_ReceiveShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3031845357387536154, guid: 6a880ce426b96064791f4efa6875a1cd, type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3031845357387536154, guid: 6a880ce426b96064791f4efa6875a1cd, type: 3}
-      propertyPath: m_ReceiveShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3862344906368242584, guid: 6a880ce426b96064791f4efa6875a1cd, type: 3}
+    - target: {fileID: 3862344906368242584, guid: 6a880ce426b96064791f4efa6875a1cd,
+        type: 3}
       propertyPath: m_Name
       value: CityPt1
       objectReference: {fileID: 0}
-    - target: {fileID: 3887470351042945030, guid: 6a880ce426b96064791f4efa6875a1cd, type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3887470351042945030, guid: 6a880ce426b96064791f4efa6875a1cd, type: 3}
-      propertyPath: m_ReceiveShadows
-      value: 0
+    - target: {fileID: 3862344906368242584, guid: 6a880ce426b96064791f4efa6875a1cd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4526714205233875234, guid: 6a880ce426b96064791f4efa6875a1cd, type: 3}
       propertyPath: m_RootOrder

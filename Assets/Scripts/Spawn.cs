@@ -11,9 +11,9 @@ public class Spawn : MonoBehaviour
 
     [Space]
     [Header("Referência do player")]
-    private Transform           player;
-    private Transform           currentPlatformPoint;
-    private int                 platformIndex;
+    public Transform           player;
+    public Transform           currentPlatformPoint;
+    public int                 platformIndex;
     
     void Start()
     {
