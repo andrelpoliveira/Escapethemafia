@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
+    public static Enemy instance;
+
     private float timer;
     private float life_current;
     private float convert_float;
@@ -15,6 +17,18 @@ public class Enemy : MonoBehaviour
     public float fire_delay;
     public Transform gun_position;
     public GameObject bullet_prefab;
+    public GameObject enemy;
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        instance = this;
+    }
 
     private void Start()
     {
@@ -43,13 +57,13 @@ public class Enemy : MonoBehaviour
     }
 
     // gerenciador de vida
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         life_current -= damage;
 
         if(life_current <= 0)
         {
-            this.gameObject.SetActive(false);
+            enemy.SetActive(false);
         }
 
         life_bar.fillAmount = life_current / convert_float;
