@@ -31,9 +31,9 @@ public class BulletEnemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print(other.name);
         if(other.tag == "Player")
         {
+            Destroy(transform.gameObject);
             Player.instance.LifeAlteration("Damage", damage);
         }
     }

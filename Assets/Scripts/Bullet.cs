@@ -31,6 +31,9 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(transform.gameObject);
+        if(other.tag == "Enemy")
+        {
+            Enemy.instance.TakeDamage(damage);
+        }
     }
 }
