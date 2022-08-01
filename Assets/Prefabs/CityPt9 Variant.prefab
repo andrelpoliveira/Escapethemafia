@@ -193,16 +193,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: dfda8a75e0728d344a0a1d67f4dbfa28, type: 3}
   m_PrefabInstance: {fileID: 4659176387144538332}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8593220862646384037 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4029025006760504697, guid: dfda8a75e0728d344a0a1d67f4dbfa28, type: 3}
-  m_PrefabInstance: {fileID: 4659176387144538332}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5220180383153929014 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -8585701079160101910, guid: dfda8a75e0728d344a0a1d67f4dbfa28, type: 3}
-  m_PrefabInstance: {fileID: 4659176387144538332}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3244346397259651186 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1319972612790976338, guid: dfda8a75e0728d344a0a1d67f4dbfa28, type: 3}
@@ -222,19 +212,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4712105624251255466, guid: dfda8a75e0728d344a0a1d67f4dbfa28, type: 3}
---- !u!65 &779944108863121703
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5220180383153929014}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.9590445, y: 5.007391, z: 18.884254}
-  m_Center: {x: -0.3781523, y: -1.3178766, z: 4.8542385}
 --- !u!114 &1754852262415805358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,16 +225,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   point: {fileID: 4739570678442365355}
---- !u!65 &8307783841941392189
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8593220862646384037}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.935977, y: 5.0404725, z: 18.094482}
-  m_Center: {x: -0.3666202, y: -1.418849, z: 5.24918}
