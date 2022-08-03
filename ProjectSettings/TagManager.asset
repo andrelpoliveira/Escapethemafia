@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Collectable
   - Enemy
+  - Ammunition
+  - Heart
+  - Coin
+  - Obstacle
   layers:
   - Default
   - TransparentFX
