@@ -4,25 +4,20 @@ using UnityEngine;
 
 public class PlayerTeste : MonoBehaviour
 {
-    public float jumpForce;
-    public LayerMask LayerMask;
-    public bool IsGrounded;
-    public float GroundCheckSize;
-    public Vector3 GroundCheckPosition;
-
     public float speed;    
     private Rigidbody rb;
-
     private int currentLane = 1;
     private Vector3 verticalTargetPosition;
     public float laneSpeed;
-    private bool isSwipping = false;
-    private Vector2 startingTouch;
 
+
+    public int maxLife = 3;
+    public int currentLife;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        currentLife = maxLife;
     }
 
     // Update is called once per frame
@@ -54,5 +49,18 @@ public class PlayerTeste : MonoBehaviour
         currentLane = targetLane;
         verticalTargetPosition = new Vector3((currentLane - 1), 0, 0);
 
-    }       
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Obstacle"))
+        {
+            currentLife--;
+            speed = 0;
+            if (currentLife <= 0)
+            {
+                Debug.Log("Game Over");//chamar o game over
+            }
+        }
+    }
 }
