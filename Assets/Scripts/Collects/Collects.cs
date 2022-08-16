@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class Collects : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public int coinValues;
+    public int lifeValues;
+    public int projectValues;
+    
 }

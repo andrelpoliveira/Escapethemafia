@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5860373424699107518}
   - component: {fileID: 3903303001987350582}
   - component: {fileID: 8817176341668042447}
+  - component: {fileID: -8967783670303908739}
   m_Layer: 0
   m_Name: Heart
   m_TagString: Heart
@@ -29,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5860373424699107517}
   m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
-  m_LocalPosition: {x: 15.098158, y: 1.4689786, z: 11.542166}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5963082697349560778}
@@ -135,7 +136,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 70
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 10
@@ -213,6 +214,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-8967783670303908739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5860373424699107517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a44ad99618ea3d4eaf50f49db4f4801, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfx: {fileID: 8300000, guid: a7ab1cd5223d2544599cf48f1a7dc407, type: 3}
 --- !u!1 &5963082697349560777
 GameObject:
   m_ObjectHideFlags: 0
