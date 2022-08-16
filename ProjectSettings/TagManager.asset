@@ -10,6 +10,7 @@ TagManager:
   - Heart
   - Coin
   - Obstacle
+  - Projectile
   layers:
   - Default
   - TransparentFX
