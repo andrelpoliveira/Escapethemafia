@@ -8,7 +8,7 @@ public class ProjectileMove : MonoBehaviour
     public float fireRate;
 
     public GameObject muzzlePrefab;
-    //public GameObject hitPrefab;
+    private float timer = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,11 +31,10 @@ public class ProjectileMove : MonoBehaviour
         if(speed != 0)
         {
             transform.position += transform.forward * (speed * Time.deltaTime);
+            timer += Time.deltaTime;
+            if(timer >= 15f) { Destroy(gameObject); }
         }
-        else
-        {
-            Debug.Log("No Speed");
-        }
+        
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -7,6 +7,7 @@ public class Explode : MonoBehaviour
     [Header("Objetos")]
     public GameObject   originalObject;
     public GameObject   fracturedObject;
+    public GameObject   coinMultObject;
     public GameObject   explosionVFX;
     public BoxCollider  colTrigger;
     [Header("Variaveis de Controle")]
@@ -17,11 +18,7 @@ public class Explode : MonoBehaviour
     public int          health;
 
     private GameObject  fractObj;
-
-    void Update()
-    {
-        
-    }
+    private GameObject  coinObj;
 
     void FractExplode()
     {
@@ -31,7 +28,7 @@ public class Explode : MonoBehaviour
             if(fracturedObject != null)
             {
                 fractObj = Instantiate(fracturedObject, originalObject.transform.position, Quaternion.identity) as GameObject;
-
+                coinObj = Instantiate(coinMultObject, originalObject.transform.position, Quaternion.identity) as GameObject;
                 foreach(Transform t in fractObj.transform)
                 {
                     var rb = t.GetComponent<Rigidbody>();
@@ -43,12 +40,17 @@ public class Explode : MonoBehaviour
                     StartCoroutine(Shrink(t, 2));
                 }
 
-                Destroy(fractObj, 5);
+                Destroy(fractObj, 3);
 
                 if(explosionVFX != null)
                 {
                     GameObject exploVFX = Instantiate(explosionVFX) as GameObject;
                     Destroy(exploVFX, 7);
+                }
+
+                if(coinObj != null)
+                {
+                    Destroy(coinObj, 3);
                 }
             }
         }
@@ -56,8 +58,8 @@ public class Explode : MonoBehaviour
 
     private void Reset()
     {
-        Destroy(fractObj);
-        Destroy(this.gameObject);
+        originalObject.SetActive(true);
+        colTrigger.enabled = true;
     }
 
     IEnumerator Shrink( Transform t, float delay)

@@ -6175,16 +6175,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e876c05fb2a76404aaee1891119ee24e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 10
   laneSpeed: 10
   jumpLength: 7.5
   jumpHeight: 3
   maxLife: 4
-  minSpeed: 7
-  maxSpeed: 20
+  minSpeed: 10
+  maxSpeed: 30
   invencibleTime: 2
   smokeRun: {fileID: 5996170208172110860}
   uiManager: {fileID: 0}
+  spawnProjectile: {fileID: 0}
+  coin: 0
+  score: 0
 --- !u!1 &7373834746745344005
 GameObject:
   m_ObjectHideFlags: 0

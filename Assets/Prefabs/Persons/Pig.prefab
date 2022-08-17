@@ -1529,11 +1529,14 @@ MonoBehaviour:
   jumpLength: 7.5
   jumpHeight: 3
   maxLife: 4
-  minSpeed: 7
-  maxSpeed: 20
+  minSpeed: 10
+  maxSpeed: 30
   invencibleTime: 2
   smokeRun: {fileID: 8867521952822582968}
   uiManager: {fileID: 0}
+  spawnProjectile: {fileID: 0}
+  coin: 0
+  score: 0
 --- !u!1 &8832605678780098523
 GameObject:
   m_ObjectHideFlags: 0

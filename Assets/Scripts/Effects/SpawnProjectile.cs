@@ -28,13 +28,7 @@ public class SpawnProjectile : MonoBehaviour
         effectToSpawn = vfx[0];
         currentProjectile = maxProjectile;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //if (Input.GetMouseButton (0)){ SpawnFx(); }
-    }
-
+    //Spawn do projétil
     void SpawnFx()
     {
         GameObject vfx;

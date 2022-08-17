@@ -11,6 +11,7 @@ TagManager:
   - Coin
   - Obstacle
   - Projectile
+  - MultiCoin
   layers:
   - Default
   - TransparentFX
