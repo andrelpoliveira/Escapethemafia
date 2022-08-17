@@ -39,25 +39,34 @@ public class PlayerRun : MonoBehaviour
     public UiManager uiManager;
     public SpawnProjectile spawnProjectile;
     //Coletáveis
-    private int coin;
-    private int amunnition;
+    [HideInInspector]
+    public int coin;
+    [HideInInspector]
+    public float score;
     // Start is called before the first frame update
     void Start()
     {
+        //Chamada dos componentes
         rbPlayer = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         runAudio = GetComponent<AudioSource>();
         spawnProjectile = GetComponent<SpawnProjectile>();
+        uiManager = FindObjectOfType<UiManager>();
+        //Seta as variáveis iniciais
         currentLife = maxLife;
         speed = minSpeed;
         blinkingValue = Shader.PropertyToID("_BlinkingValue");
-        uiManager = FindObjectOfType<UiManager>();
-        //collects = FindObjectOfType<Collects>();
+        //Start das missões
+        GameController._gameController.StartMissions();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Score do game e Update UI
+        score += Time.deltaTime * speed;
+        uiManager.UpdateScore((int)score);
+
         /* -----Inputs para pc Início -----*/
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -90,7 +99,7 @@ public class PlayerRun : MonoBehaviour
                     }
                     else
                     {
-                        if(diff.x < 0) { ChangeLane(-2); } else { ChangeLane(2); }
+                        if(diff.x < 0) { ChangeLane(-2); } else { ChangeLane(4); }
                     }
 
                     isSwipe = false;
@@ -114,7 +123,8 @@ public class PlayerRun : MonoBehaviour
             if(ratio >= 1f)
             {
                 jumping = false;
-                anim.SetBool("Jump", false);
+                anim.SetBool("Jump", true);
+                anim.SetBool("Run", false);
             }
             else
             {
@@ -126,15 +136,21 @@ public class PlayerRun : MonoBehaviour
             verticalTargetPosition.y = Mathf.MoveTowards(verticalTargetPosition.y, 0,5f * Time.deltaTime);
         }
         /* ------ Jump Fim -----*/
-        //Movimentação Player
+        //Movimentação entre lanes Player
         Vector3 targetPostion = new Vector3(verticalTargetPosition.x, verticalTargetPosition.y, transform.position.z);
         transform.position = Vector3.MoveTowards(transform.position, targetPostion, laneSpeed * Time.deltaTime);
     }
 
     private void FixedUpdate()
     {
+        //Velocidade do Player e animações
         rbPlayer.velocity = Vector3.forward * speed;
-        if (!jumping) { anim.SetBool("Idle", false); anim.SetBool("Run", true); smokeRun.SetActive(true); runAudio.mute = false; }
+        if (!jumping && currentLife > 0) { anim.SetBool("Jump", false); anim.SetBool("Run", true); smokeRun.SetActive(true); runAudio.mute = false; }
+    }
+    //Start Status
+    public void StartRun()
+    {
+
     }
     //Change Lanes
     void ChangeLane(int direction)
@@ -153,10 +169,10 @@ public class PlayerRun : MonoBehaviour
         if (!jumping)
         {
             smokeRun.SetActive(false);
-            anim.SetBool("Run", false);
             jumpStart = transform.position.z;
             anim.SetFloat("JumpSpeed", speed / jumpLength);
             anim.SetBool("Jump", true);
+            anim.SetBool("Run", false);
             jumping = true;
             runAudio.mute = true;
         }
@@ -170,7 +186,12 @@ public class PlayerRun : MonoBehaviour
             uiManager.UpdateCoins(coin);
             other.gameObject.SetActive(false);
         }
-
+        if(other.tag == "MultiCoin")
+        {
+            coin += 50;
+            uiManager.UpdateCoins(coin);
+            other.gameObject.SetActive(false);
+        }
         if(other.tag == "Heart")
         {
             if(currentLife >= 4)
@@ -204,15 +225,11 @@ public class PlayerRun : MonoBehaviour
 
         if(other.tag == "Obstacle")
         {
-            currentLife--;
-            uiManager.UpdateLife(currentLife);
-            anim.SetBool("Idle", true);
-            anim.SetBool("Run", false);
-            runAudio.mute = true;
-            speed = 0;
+            Damage();
+                     
             if(currentLife <= 0)
             {
-                //
+                Endgame();
             }
             else
             {
@@ -227,7 +244,7 @@ public class PlayerRun : MonoBehaviour
         float currentBlink = 1f;
         float lastBlink = 0;
         float blinkPeriod = 0.1f;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.2f);
         speed = minSpeed;
         while(timer < time && invencible)
         {
@@ -243,5 +260,30 @@ public class PlayerRun : MonoBehaviour
         }
         Shader.SetGlobalFloat(blinkingValue, 0);
         invencible = false;
+    }
+    void Damage()
+    {
+        currentLife--;
+        speed = 0;
+        uiManager.UpdateLife(currentLife);
+        runAudio.mute = true;
+    }
+    void Endgame()
+    {
+        GameController._gameController.coins += coin;
+        speed = 0;
+        anim.SetBool("Idle", true);
+        anim.SetBool("Run", false);
+        smokeRun.SetActive(false);
+        runAudio.mute = true;
+        uiManager.gameOverPanel.SetActive(true);
+    }
+    public void IncreaseSpeed()
+    {
+        speed *= 1.15f;
+        if(speed >= maxSpeed)
+        {
+            speed = maxSpeed;
+        }
     }
 }

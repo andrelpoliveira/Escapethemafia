@@ -7,7 +7,7 @@ public class ChangeLane : MonoBehaviour
     public AudioClip sfx;
    public void PositionLane()
     {
-        int randomLane = Random.Range(-2, 3);
+        int randomLane = Random.Range(-2, 2);
         transform.position = new Vector3(randomLane, transform.position.y, transform.position.z);
     }
 
