@@ -10,6 +10,8 @@ public class UiManager : MonoBehaviour
     public Image lifeBar;
     public Image projectBar;
     public TMP_Text tmpCoins;
+    public GameObject gameOverPanel;
+    public TMP_Text scoreText;
 
     [Header("Variaveis de controle")]
     public float life_current;
@@ -28,6 +30,7 @@ public class UiManager : MonoBehaviour
         project_current = _spawnProjectile.maxProjectile;
         lifeBar.fillAmount = life_current;
         projectBar.fillAmount = project_current;
+        gameOverPanel.SetActive(false);
     }
 
     public void UpdateLife(float lives)
@@ -41,5 +44,13 @@ public class UiManager : MonoBehaviour
     public void UpdateCoins(int coin)
     {
         tmpCoins.text = coin.ToString();
+    }
+    public void SceneEntrada()
+    {
+        GameController._gameController.EndGame();
+    }
+    public void UpdateScore(int score)
+    {
+        scoreText.text = "Score: " + score + "M";
     }
 }
