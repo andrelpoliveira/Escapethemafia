@@ -5,16 +5,12 @@ using UnityEngine;
 public class PlayerSpawner : MonoBehaviour
 {
     public GameObject[] players;
+    public GameObject[] persons;
 
     // Start is called before the first frame update
     void Awake()
     {
         Instantiate(players[GameController._gameController.characterIndex], transform.position, Quaternion.identity);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        persons[GameController._gameController.characterIndex].SetActive(true); 
     }
 }

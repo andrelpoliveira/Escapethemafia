@@ -11,7 +11,7 @@ public class PlayerRun : MonoBehaviour
     public float jumpLength;
     public float jumpHeight;
     public int maxLife = 4;
-    public float minSpeed = 9f;
+    public float minSpeed = 10f;
     public float maxSpeed = 20f;
     public float invencibleTime;
     [Header("Efeitos")]
@@ -43,6 +43,8 @@ public class PlayerRun : MonoBehaviour
     public int coin;
     [HideInInspector]
     public float score;
+    //Controle de Movimento
+    private bool canMove = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -54,15 +56,21 @@ public class PlayerRun : MonoBehaviour
         uiManager = FindObjectOfType<UiManager>();
         //Seta as variáveis iniciais
         currentLife = maxLife;
-        speed = minSpeed;
         blinkingValue = Shader.PropertyToID("_BlinkingValue");
         //Start das missões
         GameController._gameController.StartMissions();
+        //Inicio do game
+        smokeRun.SetActive(false);
+        runAudio.mute = true;
+        StartRun();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!canMove)
+            return;
         //Score do game e Update UI
         score += Time.deltaTime * speed;
         uiManager.UpdateScore((int)score);
@@ -143,14 +151,17 @@ public class PlayerRun : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Velocidade do Player e animações
         rbPlayer.velocity = Vector3.forward * speed;
-        if (!jumping && currentLife > 0) { anim.SetBool("Jump", false); anim.SetBool("Run", true); smokeRun.SetActive(true); runAudio.mute = false; }
+        if (speed > 0 && currentLife > 0)
+        {
+            if (!jumping ) { anim.SetBool("Idle", false); anim.SetBool("Jump", false); anim.SetBool("Run", true); smokeRun.SetActive(true); runAudio.mute = false; }
+        }
+        
     }
     //Start Status
     public void StartRun()
     {
-
+        StartCoroutine(CountStart());
     }
     //Change Lanes
     void ChangeLane(int direction)
@@ -212,10 +223,9 @@ public class PlayerRun : MonoBehaviour
             {
                 spawnProjectile.currentProjectile = 5;
             }
-            else
+            else if(spawnProjectile.currentProjectile < 5)
             {
                 spawnProjectile.currentProjectile++;
-                
                 uiManager.UpdateProjectile(spawnProjectile.currentProjectile);
                 other.gameObject.SetActive(false);
             }
@@ -244,7 +254,8 @@ public class PlayerRun : MonoBehaviour
         float currentBlink = 1f;
         float lastBlink = 0;
         float blinkPeriod = 0.1f;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.5f);
+        canMove = true;
         speed = minSpeed;
         while(timer < time && invencible)
         {
@@ -261,10 +272,19 @@ public class PlayerRun : MonoBehaviour
         Shader.SetGlobalFloat(blinkingValue, 0);
         invencible = false;
     }
+    IEnumerator CountStart()
+    {
+        anim.SetBool("Idle", true);
+        anim.SetBool("Run", false);
+        yield return new WaitForSeconds(3f);
+        speed = minSpeed;
+        canMove = true;
+    }
     void Damage()
     {
         currentLife--;
         speed = 0;
+        canMove = false;
         uiManager.UpdateLife(currentLife);
         runAudio.mute = true;
     }
@@ -272,6 +292,7 @@ public class PlayerRun : MonoBehaviour
     {
         GameController._gameController.coins += coin;
         speed = 0;
+        canMove = false;
         anim.SetBool("Idle", true);
         anim.SetBool("Run", false);
         smokeRun.SetActive(false);

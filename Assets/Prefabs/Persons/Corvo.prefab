@@ -6175,7 +6175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e876c05fb2a76404aaee1891119ee24e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 0
   laneSpeed: 10
   jumpLength: 7.5
   jumpHeight: 3
