@@ -1019,7 +1019,7 @@ RectTransform:
   - {fileID: 1237973443}
   - {fileID: 324941625}
   m_Father: {fileID: 1129606100}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.7888125}
   m_AnchorMax: {x: 0.25112107, y: 1}
@@ -4174,13 +4174,12 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier:
   obstacles:
-  - {fileID: 748536028994009483, guid: 04db5a134e53f8a40abf599c02b7a989, type: 3}
-  - {fileID: 8415098494198462360, guid: f21b3d64301b73e49b2f78d7f8eb9442, type: 3}
+  - {fileID: 1925490054988185735, guid: b26895e0965801340a51fe2432b79b82, type: 3}
+  - {fileID: 1799573175829920052, guid: 2d8e29451464b63428e9dbf5468f1bc9, type: 3}
   - {fileID: 2448548420126312347, guid: a4f6e2aea66ab2644b90ac7462b6329a, type: 3}
   - {fileID: 247166506987059211, guid: b1784de29fc425b40bede1f4c367cbfd, type: 3}
-  - {fileID: 1799573175829920052, guid: 2d8e29451464b63428e9dbf5468f1bc9, type: 3}
-  - {fileID: 1925490054988185735, guid: b26895e0965801340a51fe2432b79b82, type: 3}
-  numberOfObstacles: {x: 12, y: 20}
+  - {fileID: 8415098494198462360, guid: f21b3d64301b73e49b2f78d7f8eb9442, type: 3}
+  numberOfObstacles: {x: 15, y: 25}
   newObstacles: []
   coin: {fileID: 2198131811848731633, guid: 6d32b30f99b70364390420662e50e392, type: 3}
   numberOfCoins: {x: 100, y: 140}
@@ -4895,6 +4894,10 @@ MonoBehaviour:
   - {fileID: 6915212188540418174, guid: ac1065d4f3611fa4fa231a7c03466596, type: 3}
   - {fileID: 8633028756651546303, guid: f6fbacb53db883a45ac17b517969e49f, type: 3}
   - {fileID: 9145014077250914367, guid: a0a72aa837a71e84096693664b3e0c2a, type: 3}
+  persons:
+  - {fileID: 1263788924}
+  - {fileID: 1232076841}
+  - {fileID: 41855759}
 --- !u!4 &363473495
 Transform:
   m_ObjectHideFlags: 0
@@ -12140,7 +12143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a636713028d9de41a35d4737a79cddf, type: 3}
   m_Name:
   m_EditorClassIdentifier:
-  curveStrength: 0.001
+  curveStrength: -0.001
 --- !u!1 &979877783
 GameObject:
   m_ObjectHideFlags: 0
@@ -14160,9 +14163,9 @@ RectTransform:
   - {fileID: 663340569}
   - {fileID: 2068420885}
   - {fileID: 1928699893}
-  - {fileID: 41855760}
-  - {fileID: 1232076842}
   - {fileID: 1263788925}
+  - {fileID: 1232076842}
+  - {fileID: 41855760}
   - {fileID: 548334941}
   - {fileID: 903646677}
   - {fileID: 1847639188}
@@ -15726,7 +15729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1263788925
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15741,7 +15744,7 @@ RectTransform:
   - {fileID: 79532391}
   - {fileID: 1201883028}
   m_Father: {fileID: 1129606100}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.7888125}
   m_AnchorMax: {x: 0.25112107, y: 1}
@@ -24467,13 +24470,11 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier:
   obstacles:
-  - {fileID: 748536028994009483, guid: 04db5a134e53f8a40abf599c02b7a989, type: 3}
-  - {fileID: 8415098494198462360, guid: f21b3d64301b73e49b2f78d7f8eb9442, type: 3}
   - {fileID: 2448548420126312347, guid: a4f6e2aea66ab2644b90ac7462b6329a, type: 3}
   - {fileID: 247166506987059211, guid: b1784de29fc425b40bede1f4c367cbfd, type: 3}
   - {fileID: 1799573175829920052, guid: 2d8e29451464b63428e9dbf5468f1bc9, type: 3}
   - {fileID: 1925490054988185735, guid: b26895e0965801340a51fe2432b79b82, type: 3}
-  numberOfObstacles: {x: 12, y: 20}
+  numberOfObstacles: {x: 15, y: 25}
   newObstacles: []
   coin: {fileID: 2198131811848731633, guid: 6d32b30f99b70364390420662e50e392, type: 3}
   numberOfCoins: {x: 100, y: 140}

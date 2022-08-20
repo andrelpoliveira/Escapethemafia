@@ -47,7 +47,8 @@ public class SpawnProjectile : MonoBehaviour
         }
         else
         {
-            //
+            currentProjectile = 0;
+            _uiManager.UpdateProjectile(currentProjectile);
         }
         
     }
