@@ -8,8 +8,11 @@ public class PlayerRun : MonoBehaviour
     [Header("Variaveis do Player")]
     public float speed;
     public float laneSpeed;
+    public float grativy;
     public float jumpLength;
     public float jumpHeight;
+    //public float jump_force;
+    //public LayerMask layer;
     public int maxLife = 4;
     public float minSpeed = 10f;
     //public float maxSpeed = 20f;
@@ -31,6 +34,7 @@ public class PlayerRun : MonoBehaviour
     private Vector3 verticalTargetPosition;
     //Controle de Jump
     private bool jumping = false;
+    private bool is_ground;
     private float jumpStart;
     //Swipe para mobile
     private bool isSwipe = false;
@@ -115,7 +119,7 @@ public class PlayerRun : MonoBehaviour
                     }
                     else
                     {
-                        if (diff.x < 0) { ChangeLane(-2); } else { ChangeLane(4); }
+                        if (diff.x < 0) { ChangeLane(-2); } else { ChangeLane(2); }
                     }
 
                     isSwipe = false;
@@ -149,30 +153,39 @@ public class PlayerRun : MonoBehaviour
         }
         else
         {
-            verticalTargetPosition.y = Mathf.MoveTowards(verticalTargetPosition.y, 0, 5f * Time.deltaTime);
+            verticalTargetPosition.y = Mathf.MoveTowards(verticalTargetPosition.y, 0, grativy * Time.deltaTime);
         }
         /* ------ Jump Fim -----*/
-
-        // tempo para aumento de velocidade
-        time_current += Time.deltaTime;
-
-        if(time_current >= time_max)
-        {
-            IncreaseSpeed();
-            time_current = 0;
-        }
 
         //Movimentação entre lanes Player
         Vector3 targetPostion = new Vector3(verticalTargetPosition.x, verticalTargetPosition.y, transform.position.z);
         transform.position = Vector3.MoveTowards(transform.position, targetPostion, laneSpeed * Time.deltaTime);
+    
+        // tempo para aumento de velocidade
+        time_current += Time.deltaTime;
+
+        if (time_current >= time_max)
+        {
+            IncreaseSpeed();
+            time_current = 0;
+        }
     }
 
     private void FixedUpdate()
     {
         rbPlayer.velocity = Vector3.forward * speed;
+        //is_ground = Physics.CheckSphere(transform.position, 0.3f, layer);
+
         if (speed > 0 && currentLife > 0)
         {
-            if (!jumping) { anim.SetBool("Idle", false); anim.SetBool("Jump", false); anim.SetBool("Run", true); smokeRun.SetActive(true); runAudio.mute = false; }
+            if (!jumping)
+            {
+                anim.SetBool("Idle", false);
+                anim.SetBool("Jump", false);
+                anim.SetBool("Run", true);
+                smokeRun.SetActive(true);
+                runAudio.mute = false;
+            }
         }
 
     }
@@ -199,7 +212,7 @@ public class PlayerRun : MonoBehaviour
         {
             smokeRun.SetActive(false);
             jumpStart = transform.position.z;
-            anim.SetFloat("JumpSpeed", speed / jumpLength);
+            anim.SetFloat("JumpSeed", (speed / jumpLength));
             anim.SetBool("Jump", true);
             anim.SetBool("Run", false);
             jumping = true;
@@ -306,7 +319,7 @@ public class PlayerRun : MonoBehaviour
         speed *= 0.84f;
         invencibleTime *= 1.2f;
 
-        if(speed <= minSpeed)
+        if (speed <= minSpeed)
         {
             speed = minSpeed;
             invencibleTime = invencible_time_start;
@@ -315,6 +328,7 @@ public class PlayerRun : MonoBehaviour
     void Endgame()
     {
         GameController._gameController.coins += coin;
+        Shader.SetGlobalFloat(blinkingValue, 0);
         speed = 0;
         canMove = false;
         anim.SetBool("Idle", true);
@@ -326,6 +340,6 @@ public class PlayerRun : MonoBehaviour
     public void IncreaseSpeed()
     {
         speed *= 1.2f;
-        invencibleTime *= 0.84f;
+        invencibleTime *= 0.82f;
     }
 }

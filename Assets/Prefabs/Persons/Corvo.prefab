@@ -6161,7 +6161,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.740024, y: 1.7695457, z: 0.5758441}
+  m_Size: {x: 0.740024, y: 1.38, z: 0.5758441}
   m_Center: {x: 0.0012079328, y: 0.88477284, z: 0.0043592155}
 --- !u!114 &434094658
 MonoBehaviour:
@@ -6177,12 +6177,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   laneSpeed: 10
+  grativy: 9
   jumpLength: 7.5
-  jumpHeight: 3
+  jumpHeight: 4
   maxLife: 4
   minSpeed: 10
-  maxSpeed: 30
   invencibleTime: 2
+  time_max: 12
   smokeRun: {fileID: 5996170208172110860}
   uiManager: {fileID: 0}
   spawnProjectile: {fileID: 0}

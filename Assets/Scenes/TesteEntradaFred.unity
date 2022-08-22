@@ -3008,6 +3008,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 434094658, guid: ac1065d4f3611fa4fa231a7c03466596, type: 3}
+      propertyPath: jump_force
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 434094660, guid: ac1065d4f3611fa4fa231a7c03466596, type: 3}
       propertyPath: m_Enabled
       value: 0

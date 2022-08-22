@@ -68,7 +68,8 @@ MonoBehaviour:
   explosionMaxForce: 600
   explosionForceRadius: 10
   fragScaleFactor: 6
-  health: 0
+  health: 2
+  delay: 4
 --- !u!114 &3526405217501365180
 MonoBehaviour:
   m_ObjectHideFlags: 0
