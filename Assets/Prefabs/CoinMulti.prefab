@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7582750957136038359}
   - component: {fileID: 5962601619418393422}
   - component: {fileID: 6173438418735339675}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BloomG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 2697587385962884500}
   - component: {fileID: 191125574051558999}
   - component: {fileID: 4029074716024333759}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CoinMulti
   m_TagString: MultiCoin
   m_Icon: {fileID: 0}

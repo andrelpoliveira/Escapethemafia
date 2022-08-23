@@ -1,9 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class PlayerRun : MonoBehaviour
+//dificuldades dos inimigos
+public enum Difficult
+{
+    EASY, MEDIUM, HARD
+}
+
+// 
+public enum EnemyState
+{
+    JUMP, FIRE, PUSH, DIVERT
+}
+
+public class EnemyRun : MonoBehaviour
 {
     [Header("Variaveis do Player")]
     public float speed;
@@ -11,21 +22,21 @@ public class PlayerRun : MonoBehaviour
     public float grativy;
     public float jumpLength;
     public float jumpHeight;
-    //public float jump_force;
-    //public LayerMask layer;
     public int maxLife = 4;
     public float minSpeed = 10f;
-    //public float maxSpeed = 20f;
     public float invencibleTime;
     private float invencible_time_start;
     // conttole de para aumento de velocidade
     public float time_max = 12;
+    public Transform firepoint;
 
     [Header("Efeitos")]
     public GameObject smokeRun;
 
+    //controle de dificuldade do inimigo
+    private Difficult difficult_enemy;
+    private EnemyState current_state;
     //Controle de Animação e Audio
-    private AudioSource runAudio;
     private Animator anim;
     //Controle de Rigibody
     private Rigidbody rbPlayer;
@@ -34,27 +45,21 @@ public class PlayerRun : MonoBehaviour
     private Vector3 verticalTargetPosition;
     //Controle de Jump
     private bool jumping = false;
-    private bool is_ground;
     private float jumpStart;
-    //Swipe para mobile
-    private bool isSwipe = false;
-    private Vector2 startTouch;
     //Life atual do player
-    private int currentLife;
+    public int currentLife;
     private bool invencible = false;
     static int blinkingValue;
     //Script
-    public UiManager uiManager;
-    public SpawnProjectile spawnProjectile;
-    //Coletáveis
-    [HideInInspector]
-    public int coin;
-    [HideInInspector]
-    public float score;
+    public SpawnProjectileEnemy spawnProjectile;
     //Controle de Movimento
     private bool canMove = false;
-    // controle de tempo 
+    // controle de tempo para aumento de velocidade
     private float time_current;
+    //valor da posição que ia precisa ir
+    private string side;
+    //pegando obj player
+    private GameObject plr;
 
     // Start is called before the first frame update
     void Start()
@@ -62,9 +67,7 @@ public class PlayerRun : MonoBehaviour
         //Chamada dos componentes
         rbPlayer = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
-        runAudio = GetComponent<AudioSource>();
-        spawnProjectile = GetComponent<SpawnProjectile>();
-        uiManager = FindObjectOfType<UiManager>();
+        spawnProjectile = GetComponent<SpawnProjectileEnemy>();
         //Seta as variáveis iniciais
         currentLife = maxLife;
         blinkingValue = Shader.PropertyToID("_BlinkingValue");
@@ -72,10 +75,10 @@ public class PlayerRun : MonoBehaviour
         GameController._gameController.StartMissions();
         //Inicio do game
         smokeRun.SetActive(false);
-        runAudio.mute = true;
         invencible_time_start = invencibleTime;
-        StartRun();
+        difficult_enemy = Difficult.EASY;
 
+        StartRun();
     }
 
     // Update is called once per frame
@@ -83,59 +86,14 @@ public class PlayerRun : MonoBehaviour
     {
         if (!canMove)
             return;
-        //Score do game e Update UI
-        score += Time.deltaTime * speed;
-        uiManager.UpdateScore((int)score);
+        RayCastVertical();
+        RayCastHorizontal();
+        Debug.DrawRay(transform.position + Vector3.up, transform.forward * 5, Color.red);
+        Debug.DrawRay(transform.position + Vector3.up, -transform.forward * 5, Color.blue);
+        Debug.DrawRay(transform.position + Vector3.up, transform.right * 5, Color.green);
+        Debug.DrawRay(transform.position + Vector3.up, -transform.right * 5, Color.green);
+        EstateMachine();
 
-        /* -----Inputs para pc Início -----*/
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            ChangeLane(-2);
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            ChangeLane(2);
-        }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            Jump();
-        }
-        /* ----- Inputs para PC FIM -----*/
-        /* ----- Inputs para Mobile Início -----*/
-        if (Input.touchCount == 1)
-        {
-            if (isSwipe)
-            {
-                Vector2 diff = Input.GetTouch(0).position - startTouch;
-                diff = new Vector2(diff.x / Screen.width, diff.y / Screen.width);
-                if (diff.magnitude > 0.01f)
-                {
-                    if (Mathf.Abs(diff.y) > Mathf.Abs(diff.x))
-                    {
-                        if (diff.y > 0)
-                        {
-                            Jump();
-                        }
-                    }
-                    else
-                    {
-                        if (diff.x < 0) { ChangeLane(-2); } else { ChangeLane(2); }
-                    }
-
-                    isSwipe = false;
-                }
-            }
-            if (Input.GetTouch(0).phase == TouchPhase.Began)
-            {
-                startTouch = Input.GetTouch(0).position;
-                isSwipe = true;
-            }
-            else if (Input.GetTouch(0).phase == TouchPhase.Ended)
-            {
-                isSwipe = false;
-            }
-        }
-        /* ----- Inputs para Mobile Fim -----*/
         /* ----- Jump Inicio -----*/
         if (jumping)
         {
@@ -160,7 +118,7 @@ public class PlayerRun : MonoBehaviour
         //Movimentação entre lanes Player
         Vector3 targetPostion = new Vector3(verticalTargetPosition.x, verticalTargetPosition.y, transform.position.z);
         transform.position = Vector3.MoveTowards(transform.position, targetPostion, laneSpeed * Time.deltaTime);
-    
+
         // tempo para aumento de velocidade
         time_current += Time.deltaTime;
 
@@ -177,6 +135,7 @@ public class PlayerRun : MonoBehaviour
         //is_ground = Physics.CheckSphere(transform.position, 0.3f, layer);
 
         if (speed > 0 && currentLife > 0)
+
         {
             if (!jumping)
             {
@@ -184,7 +143,6 @@ public class PlayerRun : MonoBehaviour
                 anim.SetBool("Jump", false);
                 anim.SetBool("Run", true);
                 smokeRun.SetActive(true);
-                runAudio.mute = false;
             }
         }
 
@@ -216,7 +174,6 @@ public class PlayerRun : MonoBehaviour
             anim.SetBool("Jump", true);
             anim.SetBool("Run", false);
             jumping = true;
-            runAudio.mute = true;
         }
     }
     //Verificação das Colisões
@@ -224,42 +181,36 @@ public class PlayerRun : MonoBehaviour
     {
         if (other.tag == "Coin")
         {
-            coin++;
-            uiManager.UpdateCoins(coin);
             other.gameObject.SetActive(false);
         }
         if (other.tag == "MultiCoin")
         {
-            coin += 50;
-            uiManager.UpdateCoins(coin);
             other.gameObject.SetActive(false);
         }
         if (other.tag == "Heart")
         {
+            currentLife++;
+
             if (currentLife >= 4)
             {
                 currentLife = 4;
+                StartCoroutine(Blinking(invencibleTime));
             }
             else
             {
-                currentLife++;
-                uiManager.UpdateLife(currentLife);
-                StartCoroutine(Blinking(invencibleTime));
                 other.gameObject.SetActive(false);
             }
         }
         if (other.tag == "Ammunition")
         {
+            spawnProjectile.currentProjectile++;
+
             if (spawnProjectile.currentProjectile >= 5)
             {
                 spawnProjectile.currentProjectile = 5;
             }
-            else if (spawnProjectile.currentProjectile < 5)
-            {
-                spawnProjectile.currentProjectile++;
-                uiManager.UpdateProjectile(spawnProjectile.currentProjectile);
-                other.gameObject.SetActive(false);
-            }
+
+            other.gameObject.SetActive(false);
         }
 
         if (invencible) { return; }
@@ -306,6 +257,7 @@ public class PlayerRun : MonoBehaviour
     {
         anim.SetBool("Idle", true);
         anim.SetBool("Run", false);
+        verticalTargetPosition = transform.position;
         yield return new WaitForSeconds(3f);
         speed = minSpeed;
         canMove = true;
@@ -314,8 +266,6 @@ public class PlayerRun : MonoBehaviour
     {
         currentLife--;
         canMove = false;
-        uiManager.UpdateLife(currentLife);
-        runAudio.mute = true;
         speed *= 0.84f;
         invencibleTime *= 1.2f;
 
@@ -327,15 +277,12 @@ public class PlayerRun : MonoBehaviour
     }
     void Endgame()
     {
-        GameController._gameController.coins += coin;
         Shader.SetGlobalFloat(blinkingValue, 0);
         speed = 0;
         canMove = false;
         anim.SetBool("Idle", true);
         anim.SetBool("Run", false);
         smokeRun.SetActive(false);
-        runAudio.mute = true;
-        uiManager.gameOverPanel.SetActive(true);
     }
     public void IncreaseSpeed()
     {
@@ -343,8 +290,184 @@ public class PlayerRun : MonoBehaviour
         invencibleTime *= 0.82f;
     }
 
-    public void Divert(int value)
+    // dectção de colisões frente e trás
+    void RayCastVertical()
     {
-        ChangeLane(value);
+        RaycastHit hit_info;
+
+        //frente
+        if (Physics.Raycast(transform.position + Vector3.up, transform.forward, out hit_info, 5))
+        {
+            if (hit_info.collider.tag == "Obstacle")
+            {
+                OnStateEnter(EnemyState.JUMP);
+            }
+
+            if (hit_info.collider.tag == "Player")
+            {
+                OnStateEnter(EnemyState.FIRE);
+            }
+
+            print(hit_info.collider.name);
+            if (hit_info.collider.tag == "Obstacle" && (hit_info.collider.name.Equals("SafeBoxObj(Clone)") || hit_info.collider.name.Equals("SafeBox")))
+            {
+                print("dentro");
+                if (spawnProjectile.currentProjectile > 0)
+                {
+                    OnStateEnter(EnemyState.FIRE);
+                }
+                else
+                {
+                    OnStateEnter(EnemyState.JUMP);
+                }
+            }
+        }
+
+        //trás
+        if (Physics.Raycast(transform.position + Vector3.up, -transform.forward, out hit_info, 5))
+        {
+            if (hit_info.collider.tag == "Player")
+            {
+                OnStateEnter(EnemyState.JUMP);
+            }
+        }
+    }
+
+    // dectção de colisões esquerda e direita
+    void RayCastHorizontal()
+    {
+        RaycastHit hit_info;
+
+        if (Physics.Raycast(transform.position + Vector3.up, transform.right, out hit_info, 5))
+        {
+            // coleta moeda
+            if (hit_info.collider.tag == "Coin")
+            {
+                //OnStateEnter(EnemyState.DIVERT);
+                side = "right";
+            }
+
+            // empura player
+            if (hit_info.collider.tag == "Player")
+            {
+                //OnStateEnter(EnemyState.PUSH);
+                plr = hit_info.collider.gameObject;
+                side = "right";
+            }
+        }
+
+        if (Physics.Raycast(transform.position + Vector3.up, -transform.right, out hit_info, 5))
+        {
+            // coleta moeda
+            if (hit_info.collider.tag == "Coin")
+            {
+                //OnStateEnter(EnemyState.DIVERT);
+                side = "left";
+            }
+
+            // empura player
+            if (hit_info.collider.tag == "Player")
+            {
+                //OnStateEnter(EnemyState.PUSH);
+                plr = hit_info.collider.gameObject;
+                side = "left";
+            }
+        }
+    }
+    //maquina de estado
+    void OnStateEnter(EnemyState new_enemy_state)
+    {
+        StopAllCoroutines();
+        current_state = new_enemy_state;
+
+        switch (current_state)
+        {
+            case EnemyState.JUMP:
+                StartCoroutine(JumpState());
+
+                break;
+
+            case EnemyState.FIRE:
+                StartCoroutine(FireState());
+                break;
+
+            case EnemyState.PUSH:
+                StartCoroutine(PushEstate());
+                break;
+
+            case EnemyState.DIVERT:
+                StartCoroutine(DivertState());
+                break;
+        }
+    }
+
+    //funções da ia pulo
+    IEnumerator JumpState()
+    {
+        Jump();
+        yield return new WaitUntil(() => verticalTargetPosition.y == 0);
+    }
+
+    //funções da ia troca de raia
+    IEnumerator DivertState()
+    {
+        if (side == "right")
+        {
+            ChangeLane(2);
+            yield return new WaitForEndOfFrame();
+        }
+
+        if (side == "left")
+        {
+            ChangeLane(-2);
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    //funções da ia empurar player
+    IEnumerator PushEstate()
+    {
+        if (side == "right")
+        {
+            ChangeLane(2);
+            plr.GetComponent<PlayerRun>().Divert(2);
+            yield return new WaitForEndOfFrame();
+        }
+
+        if (side == "left")
+        {
+            ChangeLane(-2);
+            plr.GetComponent<PlayerRun>().Divert(-2);
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    //funções da ia tiro
+    IEnumerator FireState()
+    {
+        spawnProjectile.SpawnFx();
+        yield return new WaitForEndOfFrame();
+    }
+
+    void EstateMachine()
+    {
+        switch (difficult_enemy)
+        {
+            case Difficult.EASY:
+                IAEasy();
+
+                break;
+            case Difficult.MEDIUM:
+
+                break;
+            case Difficult.HARD:
+
+                break;
+        }
+    }
+    //inteligencia do inimigo
+    void IAEasy()
+    {
+
     }
 }

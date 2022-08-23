@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -1256550443430952386}
   - component: {fileID: 2681483384967253762}
   - component: {fileID: -221760241234444870}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Car2
   m_TagString: Obstacle
   m_Icon: {fileID: 0}

@@ -16,9 +16,9 @@ public class ChangeLane : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            if(this.gameObject.GetComponent<AudioSource>() != null)
+            if(gameObject.GetComponent<AudioSource>() != null)
             {
-                GetComponent<AudioSource>().PlayOneShot(sfx);
+                gameObject.GetComponent<AudioSource>().PlayOneShot(sfx);
             }
         }
     }

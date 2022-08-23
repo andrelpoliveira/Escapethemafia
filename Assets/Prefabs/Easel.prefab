@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4907054765660742954}
   - component: {fileID: 8415098494198462361}
   - component: {fileID: -8914485179897490230}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Easel
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
