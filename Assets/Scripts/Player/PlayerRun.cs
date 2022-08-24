@@ -55,6 +55,9 @@ public class PlayerRun : MonoBehaviour
     private bool canMove = false;
     // controle de tempo 
     private float time_current;
+    // controle de empurar
+    private bool is_push;
+    private int push_value;
 
     // Start is called before the first frame update
     void Start()
@@ -91,10 +94,14 @@ public class PlayerRun : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             ChangeLane(-2);
+            is_push = true;
+            push_value = -2;
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             ChangeLane(2);
+            is_push = true;
+            push_value = 2;
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
@@ -204,6 +211,7 @@ public class PlayerRun : MonoBehaviour
         }
         currentLane = targetLane;
         verticalTargetPosition = new Vector3((currentLane - 2), 0, 0);
+        is_push = false;
     }
     //Jump
     void Jump()
@@ -278,6 +286,15 @@ public class PlayerRun : MonoBehaviour
             }
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.transform.tag == "Player" && is_push == true)
+        {
+            collision.transform.GetComponent<EnemyRun>().Divert(push_value);
+        }
+        
+    }
     IEnumerator Blinking(float time)
     {
         invencible = true;
@@ -310,10 +327,10 @@ public class PlayerRun : MonoBehaviour
         speed = minSpeed;
         canMove = true;
     }
-    void Damage()
+    public void Damage()
     {
         currentLife--;
-        canMove = false;
+        //canMove = false;
         uiManager.UpdateLife(currentLife);
         runAudio.mute = true;
         speed *= 0.84f;

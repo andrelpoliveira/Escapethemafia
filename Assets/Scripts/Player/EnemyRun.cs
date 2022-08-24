@@ -29,6 +29,9 @@ public class EnemyRun : MonoBehaviour
     // conttole de para aumento de velocidade
     public float time_max = 12;
     public Transform firepoint;
+    // controle para dificuldade da ia, quanto maior o valor maior chance de executar
+    public int percentage_ia;
+    public float delay_ia;
 
     [Header("Efeitos")]
     public GameObject smokeRun;
@@ -92,7 +95,6 @@ public class EnemyRun : MonoBehaviour
         Debug.DrawRay(transform.position + Vector3.up, -transform.forward * 5, Color.blue);
         Debug.DrawRay(transform.position + Vector3.up, transform.right * 5, Color.green);
         Debug.DrawRay(transform.position + Vector3.up, -transform.right * 5, Color.green);
-        EstateMachine();
 
         /* ----- Jump Inicio -----*/
         if (jumping)
@@ -196,10 +198,8 @@ public class EnemyRun : MonoBehaviour
                 currentLife = 4;
                 StartCoroutine(Blinking(invencibleTime));
             }
-            else
-            {
-                other.gameObject.SetActive(false);
-            }
+
+            other.gameObject.SetActive(false);
         }
         if (other.tag == "Ammunition")
         {
@@ -262,10 +262,10 @@ public class EnemyRun : MonoBehaviour
         speed = minSpeed;
         canMove = true;
     }
-    void Damage()
+    public void Damage()
     {
         currentLife--;
-        canMove = false;
+        //canMove = false;
         speed *= 0.84f;
         invencibleTime *= 1.2f;
 
@@ -298,27 +298,28 @@ public class EnemyRun : MonoBehaviour
         //frente
         if (Physics.Raycast(transform.position + Vector3.up, transform.forward, out hit_info, 5))
         {
-            if (hit_info.collider.tag == "Obstacle")
+            if (hit_info.collider.tag == "Obstacle" && RandIA(percentage_ia) == true)
             {
                 OnStateEnter(EnemyState.JUMP);
             }
 
-            if (hit_info.collider.tag == "Player")
+            if (hit_info.collider.tag == "Player" && RandIA(percentage_ia) == true && hit_info.distance >= 3)
             {
                 OnStateEnter(EnemyState.FIRE);
             }
 
-            print(hit_info.collider.name);
             if (hit_info.collider.tag == "Obstacle" && (hit_info.collider.name.Equals("SafeBoxObj(Clone)") || hit_info.collider.name.Equals("SafeBox")))
             {
-                print("dentro");
-                if (spawnProjectile.currentProjectile > 0)
+                if (RandIA(percentage_ia) == true)
                 {
-                    OnStateEnter(EnemyState.FIRE);
-                }
-                else
-                {
-                    OnStateEnter(EnemyState.JUMP);
+                    if (spawnProjectile.currentProjectile > 0)
+                    {
+                        OnStateEnter(EnemyState.FIRE);
+                    }
+                    else
+                    {
+                        OnStateEnter(EnemyState.JUMP);
+                    }
                 }
             }
         }
@@ -326,7 +327,7 @@ public class EnemyRun : MonoBehaviour
         //trás
         if (Physics.Raycast(transform.position + Vector3.up, -transform.forward, out hit_info, 5))
         {
-            if (hit_info.collider.tag == "Player")
+            if (hit_info.collider.tag == "Player" && RandIA(percentage_ia) == true)
             {
                 OnStateEnter(EnemyState.JUMP);
             }
@@ -338,38 +339,54 @@ public class EnemyRun : MonoBehaviour
     {
         RaycastHit hit_info;
 
+        //direita
         if (Physics.Raycast(transform.position + Vector3.up, transform.right, out hit_info, 5))
         {
             // coleta moeda
-            if (hit_info.collider.tag == "Coin")
+            if (hit_info.collider.tag == "Coin" && RandIA(percentage_ia) == true)
             {
-                //OnStateEnter(EnemyState.DIVERT);
+                OnStateEnter(EnemyState.DIVERT);
                 side = "right";
             }
 
             // empura player
-            if (hit_info.collider.tag == "Player")
+            if (hit_info.collider.tag == "Player" && RandIA(percentage_ia) == true)
             {
-                //OnStateEnter(EnemyState.PUSH);
+                OnStateEnter(EnemyState.PUSH);
                 plr = hit_info.collider.gameObject;
+                side = "right";
+            }
+
+            //coleta de munição
+            if (hit_info.collider.tag == "Ammunition" && RandIA(percentage_ia) == true)
+            {
+                OnStateEnter(EnemyState.DIVERT);
                 side = "right";
             }
         }
 
+        //esqueda
         if (Physics.Raycast(transform.position + Vector3.up, -transform.right, out hit_info, 5))
         {
             // coleta moeda
-            if (hit_info.collider.tag == "Coin")
+            if (hit_info.collider.tag == "Coin" && RandIA(percentage_ia) == true)
             {
-                //OnStateEnter(EnemyState.DIVERT);
+                OnStateEnter(EnemyState.DIVERT);
                 side = "left";
             }
 
             // empura player
-            if (hit_info.collider.tag == "Player")
+            if (hit_info.collider.tag == "Player" && RandIA(percentage_ia) == true)
             {
-                //OnStateEnter(EnemyState.PUSH);
+                OnStateEnter(EnemyState.PUSH);
                 plr = hit_info.collider.gameObject;
+                side = "left";
+            }
+
+            // coleta munição
+            if (hit_info.collider.tag == "Ammunition" && RandIA(percentage_ia) == true)
+            {
+                OnStateEnter(EnemyState.DIVERT);
                 side = "left";
             }
         }
@@ -392,7 +409,7 @@ public class EnemyRun : MonoBehaviour
                 break;
 
             case EnemyState.PUSH:
-                StartCoroutine(PushEstate());
+                //StartCoroutine(PushEstate());
                 break;
 
             case EnemyState.DIVERT:
@@ -414,13 +431,13 @@ public class EnemyRun : MonoBehaviour
         if (side == "right")
         {
             ChangeLane(2);
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(delay_ia);
         }
 
         if (side == "left")
         {
             ChangeLane(-2);
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(delay_ia);
         }
     }
 
@@ -430,15 +447,30 @@ public class EnemyRun : MonoBehaviour
         if (side == "right")
         {
             ChangeLane(2);
-            plr.GetComponent<PlayerRun>().Divert(2);
-            yield return new WaitForEndOfFrame();
+
+            if (plr.GetComponent<PlayerRun>() != null)
+            {
+                plr.GetComponent<PlayerRun>().Divert(2);
+            }
+            else if (plr.GetComponent<EnemyRun>() != null)
+            {
+                plr.GetComponent<EnemyRun>().Divert(2);
+            }
+            yield return new WaitForSeconds(delay_ia);
         }
 
         if (side == "left")
         {
             ChangeLane(-2);
-            plr.GetComponent<PlayerRun>().Divert(-2);
-            yield return new WaitForEndOfFrame();
+            if (plr.GetComponent<PlayerRun>() != null)
+            {
+                plr.GetComponent<PlayerRun>().Divert(-2);
+            }
+            else if (plr.GetComponent<EnemyRun>() != null)
+            {
+                plr.GetComponent<EnemyRun>().Divert(-2);
+            }
+            yield return new WaitForSeconds(delay_ia);
         }
     }
 
@@ -446,28 +478,19 @@ public class EnemyRun : MonoBehaviour
     IEnumerator FireState()
     {
         spawnProjectile.SpawnFx();
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(delay_ia);
     }
 
-    void EstateMachine()
+    //metodo para decidir o que a ia vai fazer
+    bool RandIA(int value)
     {
-        switch (difficult_enemy)
-        {
-            case Difficult.EASY:
-                IAEasy();
-
-                break;
-            case Difficult.MEDIUM:
-
-                break;
-            case Difficult.HARD:
-
-                break;
-        }
+        int temp = Random.Range(0, 100);
+        bool retorno = temp <= value ? true : false;
+        return retorno;
     }
-    //inteligencia do inimigo
-    void IAEasy()
-    {
 
+    public void Divert(int value)
+    {
+        ChangeLane(value);
     }
 }

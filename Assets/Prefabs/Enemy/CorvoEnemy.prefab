@@ -5971,11 +5971,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6105777684444832452}
   - component: {fileID: 170073149061904574}
-  - component: {fileID: 5996170209003177259}
   - component: {fileID: 6915212188540418175}
   - component: {fileID: 434094659}
   - component: {fileID: 434094660}
   - component: {fileID: -4719373298822779796}
+  - component: {fileID: 7801649239835758508}
   m_Layer: 0
   m_Name: CorvoEnemy
   m_TagString: Player
@@ -6020,24 +6020,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &5996170209003177259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6915212188540418174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17a378c1032b5e5438b418e421875502, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firepoint: {fileID: 5996170209628363496}
-  vfx:
-  - {fileID: 8291898948691924675, guid: 3518093c1bbdc8641a081127a5591045, type: 3}
-  maxProjectile: 5
-  currentProjectile: 0
-  _uiManager: {fileID: 0}
 --- !u!82 &6915212188540418175
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6184,11 +6166,29 @@ MonoBehaviour:
   minSpeed: 10
   invencibleTime: 2
   time_max: 12
+  firepoint: {fileID: 5996170209628363499}
+  percentage_ia: 25
+  delay_ia: 1
   smokeRun: {fileID: 5996170208172110860}
-  uiManager: {fileID: 0}
+  currentLife: 0
   spawnProjectile: {fileID: 0}
-  coin: 0
-  score: 0
+--- !u!114 &7801649239835758508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6915212188540418174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6b1df1abc76e574abe3df9a85008a72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firepoint: {fileID: 5996170209628363496}
+  vfx:
+  - {fileID: 8291898948691924675, guid: 7a0e94cf1ba18db4488621b1a32a3814, type: 3}
+  maxProjectile: 5
+  currentProjectile: 0
 --- !u!1 &7373834746745344005
 GameObject:
   m_ObjectHideFlags: 0
