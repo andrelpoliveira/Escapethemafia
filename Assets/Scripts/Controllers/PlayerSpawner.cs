@@ -25,7 +25,7 @@ public class PlayerSpawner : MonoBehaviour
                     obj.transform.position = new Vector3(-4, 1, 0);
                     temp++;
                 }
-                else if (temp == 2)
+                else if (temp == 1)
                 {
                     GameObject obj = Instantiate(enemy[i], transform.position, Quaternion.identity);
                     obj.transform.position = new Vector3(4, 1, 0);

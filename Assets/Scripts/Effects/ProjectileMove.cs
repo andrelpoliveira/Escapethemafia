@@ -39,6 +39,19 @@ public class ProjectileMove : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if(collision.transform.tag == "Player")
+        {
+            if(collision.transform.GetComponent<PlayerRun>() != null)
+            {
+                collision.transform.GetComponent<PlayerRun>().Damage();
+                print("dano no player");
+            }
+            else if (collision.transform.GetComponent<EnemyRun>() != null)
+            {
+                collision.transform.GetComponent<EnemyRun>().Damage();
+                print("dano no enemy");
+            }
+        }
         speed = 0;
         Destroy(gameObject);
     }

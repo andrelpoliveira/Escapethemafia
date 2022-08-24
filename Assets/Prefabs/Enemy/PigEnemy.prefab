@@ -1516,6 +1516,8 @@ MonoBehaviour:
   invencibleTime: 2
   time_max: 12
   firepoint: {fileID: 8867521952104048847}
+  percentage_ia: 25
+  delay_ia: 1
   smokeRun: {fileID: 8867521952822582968}
   currentLife: 0
   spawnProjectile: {fileID: 0}

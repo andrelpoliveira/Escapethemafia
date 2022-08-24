@@ -6122,11 +6122,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8476422614893236869}
   - component: {fileID: 2540700487325403391}
-  - component: {fileID: 9145014077250914366}
   - component: {fileID: 9145014077250914361}
   - component: {fileID: 7868543383303778183}
   - component: {fileID: 5822408016662035201}
   - component: {fileID: 7862112609876270486}
+  - component: {fileID: 5909669124067215575}
   m_Layer: 0
   m_Name: RinoEnemy
   m_TagString: Player
@@ -6171,24 +6171,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &9145014077250914366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9145014077250914367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17a378c1032b5e5438b418e421875502, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firepoint: {fileID: 8226093035258835333}
-  vfx:
-  - {fileID: 8291898948691924675, guid: 683f008240025724d917857cb5b01255, type: 3}
-  maxProjectile: 5
-  currentProjectile: 0
-  _uiManager: {fileID: 0}
 --- !u!82 &9145014077250914361
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6335,11 +6317,29 @@ MonoBehaviour:
   minSpeed: 10
   invencibleTime: 2
   time_max: 12
+  firepoint: {fileID: 8226093035258835332}
+  percentage_ia: 25
+  delay_ia: 1
   smokeRun: {fileID: 5996170208172110860, guid: c658fef047e8c4a4aa2cb60de08dbe69, type: 3}
-  uiManager: {fileID: 0}
+  currentLife: 0
   spawnProjectile: {fileID: 0}
-  coin: 0
-  score: 0
+--- !u!114 &5909669124067215575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9145014077250914367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6b1df1abc76e574abe3df9a85008a72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firepoint: {fileID: 8226093035258835333}
+  vfx:
+  - {fileID: 8291898948691924675, guid: 7a0e94cf1ba18db4488621b1a32a3814, type: 3}
+  maxProjectile: 5
+  currentProjectile: 0
 --- !u!1 &9167617024515725712
 GameObject:
   m_ObjectHideFlags: 0

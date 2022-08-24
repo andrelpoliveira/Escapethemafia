@@ -11,7 +11,6 @@ public class SpawnProjectileEnemy : MonoBehaviour
     public int maxProjectile = 5;
 
     [Header("UI")]
-    private Button btnAction;
     private GameObject effectToSpawn;
 
     //Variáveis Privadas
@@ -27,7 +26,7 @@ public class SpawnProjectileEnemy : MonoBehaviour
     public void SpawnFx()
     {
         GameObject vfx;
-        if (currentProjectile >= 0)
+        if (currentProjectile > 0)
         {
             if (firepoint != null)
             {
