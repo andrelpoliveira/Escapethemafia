@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -6597074864048198111}
   - component: {fileID: 4899626349299310483}
   - component: {fileID: 1085479939080325127}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bus
   m_TagString: Obstacle
   m_Icon: {fileID: 0}

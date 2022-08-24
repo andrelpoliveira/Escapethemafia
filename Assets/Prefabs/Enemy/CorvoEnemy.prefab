@@ -5975,9 +5975,9 @@ GameObject:
   - component: {fileID: 6915212188540418175}
   - component: {fileID: 434094659}
   - component: {fileID: 434094660}
-  - component: {fileID: 434094658}
+  - component: {fileID: -4719373298822779796}
   m_Layer: 0
-  m_Name: Corvo
+  m_Name: CorvoEnemy
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6163,7 +6163,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.740024, y: 1.38, z: 0.5758441}
   m_Center: {x: 0.0012079328, y: 0.88477284, z: 0.0043592155}
---- !u!114 &434094658
+--- !u!114 &-4719373298822779796
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6172,7 +6172,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6915212188540418174}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e876c05fb2a76404aaee1891119ee24e, type: 3}
+  m_Script: {fileID: 11500000, guid: 16a7b21345e27a542bc8043479eb4e7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
