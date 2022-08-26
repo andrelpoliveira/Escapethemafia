@@ -34,13 +34,12 @@ public class PlayerRun : MonoBehaviour
     private Vector3 verticalTargetPosition;
     //Controle de Jump
     private bool jumping = false;
-    private bool is_ground;
     private float jumpStart;
     //Swipe para mobile
     private bool isSwipe = false;
     private Vector2 startTouch;
     //Life atual do player
-    private int currentLife;
+    public int currentLife;
     private bool invencible = false;
     static int blinkingValue;
     //Script
@@ -55,9 +54,11 @@ public class PlayerRun : MonoBehaviour
     private bool canMove = false;
     // controle de tempo 
     private float time_current;
+    private float time_game_over;
     // controle de empurar
     private bool is_push;
     private int push_value;
+    RaycastHit hit_info_test;
 
     // Start is called before the first frame update
     void Start()
@@ -90,6 +91,7 @@ public class PlayerRun : MonoBehaviour
         score += Time.deltaTime * speed;
         uiManager.UpdateScore((int)score);
 
+        Debug.DrawRay(transform.position + Vector3.up, transform.forward * 5, Color.red);
         /* -----Inputs para pc Início -----*/
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -105,6 +107,10 @@ public class PlayerRun : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            if (Physics.Raycast(transform.position + Vector3.up, transform.forward, out hit_info_test, 10))
+            {
+                //print(hit_info_test.distance);
+            }
             Jump();
         }
         /* ----- Inputs para PC FIM -----*/
@@ -167,7 +173,7 @@ public class PlayerRun : MonoBehaviour
         //Movimentação entre lanes Player
         Vector3 targetPostion = new Vector3(verticalTargetPosition.x, verticalTargetPosition.y, transform.position.z);
         transform.position = Vector3.MoveTowards(transform.position, targetPostion, laneSpeed * Time.deltaTime);
-    
+
         // tempo para aumento de velocidade
         time_current += Time.deltaTime;
 
@@ -176,6 +182,14 @@ public class PlayerRun : MonoBehaviour
             IncreaseSpeed();
             time_current = 0;
         }
+
+        RaycastHit hit_info;
+
+        if (!Physics.Raycast(transform.position + Vector3.up, -transform.up, out hit_info, 5))
+        {
+            Endgame();
+        }
+
     }
 
     private void FixedUpdate()
@@ -289,11 +303,11 @@ public class PlayerRun : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.transform.tag == "Player" && is_push == true)
+        if (collision.transform.tag == "Player" && is_push == true)
         {
             collision.transform.GetComponent<EnemyRun>().Divert(push_value);
         }
-        
+
     }
     IEnumerator Blinking(float time)
     {
@@ -342,10 +356,10 @@ public class PlayerRun : MonoBehaviour
             invencibleTime = invencible_time_start;
         }
     }
-    void Endgame()
+    public void Endgame()
     {
+        print("player");
         GameController._gameController.coins += coin;
-        Shader.SetGlobalFloat(blinkingValue, 0);
         speed = 0;
         canMove = false;
         anim.SetBool("Idle", true);
@@ -353,6 +367,7 @@ public class PlayerRun : MonoBehaviour
         smokeRun.SetActive(false);
         runAudio.mute = true;
         uiManager.gameOverPanel.SetActive(true);
+        Time.timeScale = 0;
     }
     public void IncreaseSpeed()
     {

@@ -1021,7 +1021,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5996170208172110863
 Transform:
   m_ObjectHideFlags: 0
@@ -6167,8 +6167,8 @@ MonoBehaviour:
   invencibleTime: 2
   time_max: 12
   firepoint: {fileID: 5996170209628363499}
-  percentage_ia: 25
-  delay_ia: 1
+  percentage_ia: 100
+  delay_ia: 0
   smokeRun: {fileID: 5996170208172110860}
   currentLife: 0
   spawnProjectile: {fileID: 0}
