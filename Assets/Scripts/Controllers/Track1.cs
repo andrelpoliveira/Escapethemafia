@@ -122,7 +122,6 @@ public class Track1 : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            other.GetComponent<PlayerRun>().IncreaseSpeed();
             transform.position = new Vector3(0, 0, transform.position.z + 330 * 2);
             PositionObstacles();
             PositionCoins();

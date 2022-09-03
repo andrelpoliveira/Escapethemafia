@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
     public float delay_fire;
     public GameObject bullet_prefab;
     public Transform bullet_position;
-        
+
     [HideInInspector]
     public Rigidbody plr_rb;
     [HideInInspector]
@@ -131,7 +131,7 @@ public class Player : MonoBehaviour
         {
             MoveX(-1);
         }
-        
+
         GameManager.instance.UpdateHUD();
     }
 
@@ -203,7 +203,7 @@ public class Player : MonoBehaviour
     // arrasto de tela
     public void DragMove()
     {
-        // esquerda 
+        // esquerda
         if ((mouse_position.x - Input.mousePosition.x) >= 20 && is_move == false)
         {
             is_move = true;
@@ -275,7 +275,7 @@ public class Player : MonoBehaviour
         {
             bulet_current = bulet_max;
         }
-        
+
         bulet_bar.fillAmount = bulet_current / convert_float;
     }
 

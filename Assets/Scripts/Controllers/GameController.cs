@@ -33,6 +33,9 @@ public class GameController : MonoBehaviour
     //Cenas do game
     public string scene;
     public string[] sceneName;
+    //controle para vitoria
+    private int plrs;
+    public PlayerRun plr;
     
     private void Awake()
     {
@@ -158,6 +161,7 @@ public class GameController : MonoBehaviour
     {
         characterIndex = charIndex;
         StartCoroutine(LoadSceneGame());
+        
     }
     //End Game
     public void EndGame()
@@ -173,7 +177,7 @@ public class GameController : MonoBehaviour
     //Corrotina para chamar a Entrada
     IEnumerator LoadSceneEntrada()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(.3f);
         SceneManager.LoadScene(sceneName[0]);
     }
     //Retorna as missões na tela de entrada
@@ -212,5 +216,16 @@ public class GameController : MonoBehaviour
         missions[i].Create();
 
         FindObjectOfType<EntradaController>().SetMission();
+    }
+
+    public void GameWin(int value)
+    {
+        plrs += value;
+        plr = FindObjectOfType(typeof(PlayerRun)) as PlayerRun;
+
+        if (plrs == 2)
+        {
+            plr.Endgame();
+        }
     }
 }

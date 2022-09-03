@@ -68,7 +68,8 @@ MonoBehaviour:
   explosionMaxForce: 600
   explosionForceRadius: 10
   fragScaleFactor: 6
-  health: 0
+  health: 2
+  delay: 4
 --- !u!114 &3526405217501365180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,7 +173,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2768344369425684234}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2, y: 1.1508737, z: 1.0382552}

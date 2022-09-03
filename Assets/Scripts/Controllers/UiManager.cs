@@ -48,6 +48,7 @@ public class UiManager : MonoBehaviour
     public void SceneEntrada()
     {
         GameController._gameController.EndGame();
+        Time.timeScale = 1;
     }
     public void UpdateScore(int score)
     {

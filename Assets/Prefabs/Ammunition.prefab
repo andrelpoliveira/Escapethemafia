@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6653398350636432194}
   - component: {fileID: 2727680778599159731}
   - component: {fileID: -7807321404673589690}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ammunition
   m_TagString: Ammunition
   m_Icon: {fileID: 0}
