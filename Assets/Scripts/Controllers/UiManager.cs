@@ -11,6 +11,7 @@ public class UiManager : MonoBehaviour
     public Image projectBar;
     public TMP_Text tmpCoins;
     public GameObject gameOverPanel;
+    public GameObject gameWinPanel;
     public TMP_Text scoreText;
 
     [Header("Variaveis de controle")]
@@ -31,6 +32,7 @@ public class UiManager : MonoBehaviour
         lifeBar.fillAmount = life_current;
         projectBar.fillAmount = project_current;
         gameOverPanel.SetActive(false);
+        gameWinPanel.SetActive(false);
     }
 
     public void UpdateLife(float lives)
