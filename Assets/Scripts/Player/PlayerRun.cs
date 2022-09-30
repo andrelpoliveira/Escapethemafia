@@ -109,7 +109,7 @@ public class PlayerRun : MonoBehaviour
         {
             if (Physics.Raycast(transform.position + Vector3.up, transform.forward, out hit_info_test, 10))
             {
-                //print(hit_info_test.distance);
+                print(hit_info_test.distance);
             }
             Jump();
         }
@@ -343,6 +343,7 @@ public class PlayerRun : MonoBehaviour
     }
     public void Damage()
     {
+        print("errou pulo");
         currentLife--;
         //canMove = false;
         uiManager.UpdateLife(currentLife);
@@ -369,6 +370,21 @@ public class PlayerRun : MonoBehaviour
         uiManager.gameOverPanel.SetActive(true);
         Time.timeScale = 0;
     }
+
+    public void WinGame()
+    {
+        GameController._gameController.coins += coin;
+        speed = 0;
+        canMove = false;
+        anim.SetBool("Idle", true);
+        anim.SetBool("Run", false);
+        smokeRun.SetActive(false);
+        runAudio.mute = true;
+        uiManager.gameWinPanel.SetActive(true);
+        uiManager.UpdateGameWin(score, coin);
+        Time.timeScale = 0;
+    }
+
     public void IncreaseSpeed()
     {
         speed *= 1.2f;

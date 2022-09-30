@@ -39,6 +39,7 @@ public class SpawnProjectile : MonoBehaviour
             if (firepoint != null)
             {
                 vfx = Instantiate(effectToSpawn, firepoint.transform.position, Quaternion.identity);
+                vfx.GetComponent<ProjectileMove>().speed += GetComponent<PlayerRun>().speed;
             }
             else
             {

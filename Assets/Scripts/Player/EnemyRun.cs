@@ -175,7 +175,8 @@ public class EnemyRun : MonoBehaviour
                 currentLife = 4;
                 StartCoroutine(Blinking(invencibleTime));
             }
-
+            
+            lifeBar.fillAmount = (float)(currentLife) / maxLife;
             other.gameObject.SetActive(false);
         }
         if (other.tag == "Ammunition" && Vector3.Distance(transform.position, other.transform.position) <= 2)

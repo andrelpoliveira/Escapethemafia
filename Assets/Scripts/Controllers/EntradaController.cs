@@ -62,6 +62,7 @@ public class EntradaController : MonoBehaviour
     IEnumerator FadeInPanel()
     {
         yield return new WaitForSeconds(1.2f);
+        characters[characterIndex].SetActive(false);
         fadeInPanel.SetActive(true);
     }
 

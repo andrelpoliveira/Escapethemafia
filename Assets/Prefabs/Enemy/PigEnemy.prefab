@@ -1831,10 +1831,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc8b8d5bb0e37547a790506b58a5491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  percentage_ia: 25
+  percentage_ia: 100
   delay_ia: 1
-  rayDistance: 0
-  distanceJump: 9
+  rayDistance: 10
+  distanceJump: 9.5
 --- !u!114 &4558711207471019103
 MonoBehaviour:
   m_ObjectHideFlags: 0
