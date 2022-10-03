@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ChangeLane : MonoBehaviour
 {
-    public AudioClip sfx;
    public void PositionLane()
     {
         int id_random = Random.Range(0, 5);
@@ -12,14 +11,4 @@ public class ChangeLane : MonoBehaviour
         transform.position = new Vector3(randomLane[id_random], transform.position.y, transform.position.z);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "Player")
-        {
-            if(gameObject.GetComponent<AudioSource>() != null)
-            {
-                gameObject.GetComponent<AudioSource>().PlayOneShot(sfx);
-            }
-        }
-    }
 }
