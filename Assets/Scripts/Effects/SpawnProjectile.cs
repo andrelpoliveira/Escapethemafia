@@ -19,6 +19,9 @@ public class SpawnProjectile : MonoBehaviour
 
     //Scripts
     public UiManager _uiManager;
+    AudioManager audio_manager;
+    GameController game_controller;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +30,8 @@ public class SpawnProjectile : MonoBehaviour
         btnAction.onClick.AddListener(SpawnFx);
         effectToSpawn = vfx[0];
         currentProjectile = maxProjectile;
+        audio_manager = AudioManager.instance;
+        game_controller = GameController._gameController;
     }
     //Spawn do projétil
     void SpawnFx()
@@ -36,6 +41,7 @@ public class SpawnProjectile : MonoBehaviour
         if(currentProjectile >= 0)
         {
             _uiManager.UpdateProjectile(currentProjectile);
+            audio_manager.PlayFx(audio_manager.fx_fire[game_controller.characterIndex]);
             if (firepoint != null)
             {
                 vfx = Instantiate(effectToSpawn, firepoint.transform.position, Quaternion.identity);

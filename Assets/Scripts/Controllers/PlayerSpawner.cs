@@ -29,6 +29,7 @@ public class PlayerSpawner : MonoBehaviour
                 {
                     GameObject obj = Instantiate(enemy[i], transform.position, Quaternion.identity);
                     obj.transform.position = new Vector3(4, 1, 0);
+                    temp++;
                 }
 
             }

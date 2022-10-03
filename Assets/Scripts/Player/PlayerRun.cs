@@ -25,7 +25,6 @@ public class PlayerRun : MonoBehaviour
     public GameObject smokeRun;
 
     //Controle de Animação e Audio
-    private AudioSource runAudio;
     private Animator anim;
     //Controle de Rigibody
     private Rigidbody rbPlayer;
@@ -45,6 +44,8 @@ public class PlayerRun : MonoBehaviour
     //Script
     public UiManager uiManager;
     public SpawnProjectile spawnProjectile;
+    AudioManager audio_manager;
+    GameController game_controller;
     //Coletáveis
     [HideInInspector]
     public int coin;
@@ -66,17 +67,17 @@ public class PlayerRun : MonoBehaviour
         //Chamada dos componentes
         rbPlayer = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
-        runAudio = GetComponent<AudioSource>();
         spawnProjectile = GetComponent<SpawnProjectile>();
         uiManager = FindObjectOfType<UiManager>();
+        audio_manager = AudioManager.instance;
+        game_controller = GameController._gameController;
         //Seta as variáveis iniciais
         currentLife = maxLife;
         blinkingValue = Shader.PropertyToID("_BlinkingValue");
         //Start das missões
-        GameController._gameController.StartMissions();
+        game_controller.StartMissions();
         //Inicio do game
         smokeRun.SetActive(false);
-        runAudio.mute = true;
         invencible_time_start = invencibleTime;
         StartRun();
 
@@ -205,7 +206,6 @@ public class PlayerRun : MonoBehaviour
                 anim.SetBool("Jump", false);
                 anim.SetBool("Run", true);
                 smokeRun.SetActive(true);
-                runAudio.mute = false;
             }
         }
 
@@ -238,7 +238,6 @@ public class PlayerRun : MonoBehaviour
             anim.SetBool("Jump", true);
             anim.SetBool("Run", false);
             jumping = true;
-            runAudio.mute = true;
         }
     }
     //Verificação das Colisões
@@ -249,6 +248,7 @@ public class PlayerRun : MonoBehaviour
             coin++;
             uiManager.UpdateCoins(coin);
             other.gameObject.SetActive(false);
+            audio_manager.PlayFx(audio_manager.fx_coin);
         }
         if (other.tag == "MultiCoin")
         {
@@ -268,6 +268,7 @@ public class PlayerRun : MonoBehaviour
                 uiManager.UpdateLife(currentLife);
                 StartCoroutine(Blinking(invencibleTime));
                 other.gameObject.SetActive(false);
+                audio_manager.PlayFx(audio_manager.fx_heart);
             }
         }
         if (other.tag == "Ammunition")
@@ -347,7 +348,6 @@ public class PlayerRun : MonoBehaviour
         currentLife--;
         //canMove = false;
         uiManager.UpdateLife(currentLife);
-        runAudio.mute = true;
         speed *= 0.84f;
         invencibleTime *= 1.2f;
 
@@ -360,26 +360,26 @@ public class PlayerRun : MonoBehaviour
     public void Endgame()
     {
         print("player");
-        GameController._gameController.coins += coin;
+        game_controller.coins += coin;
+        audio_manager.PlayMusic(audio_manager.game_over, false);
         speed = 0;
         canMove = false;
         anim.SetBool("Idle", true);
         anim.SetBool("Run", false);
         smokeRun.SetActive(false);
-        runAudio.mute = true;
         uiManager.gameOverPanel.SetActive(true);
         Time.timeScale = 0;
     }
 
     public void WinGame()
     {
-        GameController._gameController.coins += coin;
+        game_controller.coins += coin;
+        audio_manager.PlayMusic(audio_manager.game_over, false);
         speed = 0;
         canMove = false;
         anim.SetBool("Idle", true);
         anim.SetBool("Run", false);
         smokeRun.SetActive(false);
-        runAudio.mute = true;
         uiManager.gameWinPanel.SetActive(true);
         uiManager.UpdateGameWin(score, coin);
         Time.timeScale = 0;

@@ -10,24 +10,26 @@ public class AudioManager : MonoBehaviour
     public AudioSource fx;
 
     [Header("Music")]
-    public AudioClip title;
-    public AudioClip intro_stage;
-    public AudioClip loop_stage;
+    //public AudioClip title;
+    //public AudioClip intro_stage;
+    //public AudioClip loop_stage;
     public AudioClip game_over;
-    public AudioClip play_again;
-    public AudioClip power_up;
+    public AudioClip start_game;
+    //public AudioClip power_up;
 
     [Space]
     [Header("Fx")]
     public AudioClip fx_coin;
-    public AudioClip fx_jump;
+    public AudioClip[] fx_fire;
+    public AudioClip fx_running;
+    public AudioClip fx_heart;
 
-    [Space]
-    [Header("Speak")]
-    public AudioClip fx_its_me;
-    public AudioClip fx_game_over;
-    public AudioClip fx_start;
-    public AudioClip fx_title;
+    //[Space]
+    //[Header("Speak")]
+    //public AudioClip fx_its_me;
+    //public AudioClip fx_game_over;
+    //public AudioClip fx_start;
+    //public AudioClip fx_title;
 
     private void Awake()
     {
@@ -54,12 +56,12 @@ public class AudioManager : MonoBehaviour
         fx.PlayOneShot(clip);
     }
 
-    public IEnumerator ChangeMusic()
-    {
-        PlayMusic(intro_stage, false);
-        yield return new WaitForEndOfFrame();
+    //public IEnumerator ChangeMusic()
+    //{
+    //    PlayMusic(intro_stage, false);
+    //    yield return new WaitForEndOfFrame();
 
-        yield return new WaitUntil(() => !music.isPlaying);
-        PlayMusic(loop_stage, true);
-    }
+    //    yield return new WaitUntil(() => !music.isPlaying);
+    //    PlayMusic(loop_stage, true);
+    //}
 }

@@ -13,15 +13,29 @@ public class EntradaController : MonoBehaviour
     public TMP_Text coinsTxt, costTxt;
     public GameObject[] rewardButton;
     public GameObject[] characters;
+    public GameObject btn_message;
 
     //Controle dos Personagens
     private int characterIndex = 0;
+    AudioManager audio_manager;
+    GameController game_controller;
+
+
     private void Start()
     {
+        audio_manager = AudioManager.instance;
+        game_controller = GameController._gameController;
         painelMission.GetComponent<Animator>().SetBool("Interaction", false);
         fadeInPanel.SetActive(false);
         SetMission();
-        Updatecoins(GameController._gameController.coins);
+        Updatecoins(game_controller.coins);
+        audio_manager.PlayMusic(audio_manager.start_game, true);
+        
+        if (game_controller.characterCost[characterIndex] == 0)
+        {
+            costTxt.text = "Selected";
+            btn_message.SetActive(false);
+        }
     }
 
     public void Updatecoins(int coins)
@@ -31,16 +45,16 @@ public class EntradaController : MonoBehaviour
     //StartGame Fase 01
     public void NextLevel()
     {
-        if(GameController._gameController.characterCost[characterIndex] <= GameController._gameController.coins)
+        if (game_controller.characterCost[characterIndex] <= game_controller.coins)
         {
-            GameController._gameController.coins -= GameController._gameController.characterCost[characterIndex];
-            GameController._gameController.characterCost[characterIndex] = 0;
-            GameController._gameController.Save();
+            game_controller.coins -= game_controller.characterCost[characterIndex];
+            game_controller.characterCost[characterIndex] = 0;
+            game_controller.Save();
             painelMission.GetComponent<Animator>().SetBool("Interaction", true);
             StartCoroutine(FadeInPanel());
-            GameController._gameController.StartGame(characterIndex);
+            game_controller.StartGame(characterIndex);
         }
-        
+
     }
     //Definição das missões
     public void SetMission()
@@ -56,7 +70,7 @@ public class EntradaController : MonoBehaviour
                 rewardButton[i].SetActive(true);
             }
         }
-        GameController._gameController.Save();
+        game_controller.Save();
     }
     //Corrotina para iniciar o fadeIn
     IEnumerator FadeInPanel()
@@ -68,20 +82,20 @@ public class EntradaController : MonoBehaviour
 
     public void GetReward(int missionIndex)
     {
-        GameController._gameController.coins += GameController._gameController.GetMission(missionIndex).reward;
-        Updatecoins(GameController._gameController.coins);
+        game_controller.coins += GameController._gameController.GetMission(missionIndex).reward;
+        Updatecoins(game_controller.coins);
         rewardButton[missionIndex].SetActive(false);
-        GameController._gameController.GenerateMission(missionIndex);
+        game_controller.GenerateMission(missionIndex);
     }
     //Seleção de Personagens
     public void ChangeCharacter(int index)
     {
         characterIndex += index;
-        if(characterIndex >= characters.Length)
+        if (characterIndex >= characters.Length)
         {
             characterIndex = 0;
         }
-        else if(characterIndex < 0)
+        else if (characterIndex < 0)
         {
             characterIndex = characters.Length - 1;
         }
@@ -95,10 +109,16 @@ public class EntradaController : MonoBehaviour
         }
 
         string cost = "";
-        if(GameController._gameController.characterCost[characterIndex] != 0)
+        if (game_controller.characterCost[characterIndex] != 0 && game_controller.coins < game_controller.characterCost[characterIndex])
         {
-            cost = GameController._gameController.characterCost[characterIndex].ToString();
+            cost = game_controller.characterCost[characterIndex].ToString();
+            costTxt.text = "Cost: " + cost;
+            btn_message.SetActive(true);
         }
-        costTxt.text = "Cost: " + cost;
+        else
+        {
+            costTxt.text = "Selected";
+            btn_message.SetActive(false);
+        }
     }
 }
