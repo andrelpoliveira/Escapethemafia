@@ -9,6 +9,7 @@ public class EntradaController : MonoBehaviour
     [Header("UI's")]
     public GameObject fadeInPanel;
     public GameObject painelMission;
+    public Animator painelSettings;
     public TMP_Text[] description, reward, progress;
     public TMP_Text coinsTxt, costTxt;
     public GameObject[] rewardButton;
@@ -16,6 +17,7 @@ public class EntradaController : MonoBehaviour
 
     //Controle dos Personagens
     private int characterIndex = 0;
+    private bool settingOpen;
     private void Start()
     {
         painelMission.GetComponent<Animator>().SetBool("Interaction", false);
@@ -99,5 +101,11 @@ public class EntradaController : MonoBehaviour
             cost = GameController._gameController.characterCost[characterIndex].ToString();
         }
         costTxt.text = "Cost: " + cost;
+    }
+
+    public void ControlSettings()
+    {
+        settingOpen = !settingOpen;
+        if(settingOpen) { painelSettings.SetTrigger("On"); } else { painelSettings.SetTrigger("Off"); }
     }
 }
