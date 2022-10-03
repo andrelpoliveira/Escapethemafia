@@ -14,6 +14,10 @@ public class UiManager : MonoBehaviour
     public GameObject gameWinPanel;
     public TMP_Text scoreText;
 
+    [Header("---Game Win---")]
+    public TMP_Text score_text;
+    public TMP_Text coin_text;
+
     [Header("Variaveis de controle")]
     public float life_current;
     public float project_current;
@@ -55,5 +59,11 @@ public class UiManager : MonoBehaviour
     public void UpdateScore(int score)
     {
         scoreText.text = "Score: " + score + "M";
+    }
+
+    public void UpdateGameWin(float score, int coin)
+    {
+        score_text.text = $"Socre: {score.ToString("N0")} M";
+        coin_text.text = coin.ToString();
     }
 }

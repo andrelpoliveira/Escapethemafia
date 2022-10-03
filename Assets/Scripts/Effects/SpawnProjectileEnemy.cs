@@ -23,7 +23,7 @@ public class SpawnProjectileEnemy : MonoBehaviour
         currentProjectile = maxProjectile;
     }
     //Spawn do projétil
-    public void SpawnFx()
+    public void SpawnFx(float speed)
     {
         GameObject vfx;
         if (currentProjectile > 0)
@@ -32,6 +32,7 @@ public class SpawnProjectileEnemy : MonoBehaviour
             {
                 currentProjectile--;
                 vfx = Instantiate(effectToSpawn, firepoint.transform.position, Quaternion.identity);
+                vfx.GetComponent<ProjectileMove>().speed += speed;
             }
             else
             {

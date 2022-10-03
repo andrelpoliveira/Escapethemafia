@@ -225,7 +225,7 @@ public class GameController : MonoBehaviour
 
         if (plrs == 2)
         {
-            plr.Endgame();
+            plr.WinGame();
         }
     }
 }

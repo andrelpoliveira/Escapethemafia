@@ -34,6 +34,7 @@ public class IAEnemy : MonoBehaviour
     // olho da ia
     RaycastHit hit_info;
     private bool isChange;
+    //lista de obj na colisão
 
     // Start is called before the first frame update
     void Start()
@@ -56,27 +57,59 @@ public class IAEnemy : MonoBehaviour
         Debug.DrawRay(transform.position + Vector3.up, -transform.up * 2, Color.magenta);
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.tag == "Obstacle")
-        {
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.tag == "Obstacle")
+    //    {
+    //        print($"valor da lista {objHit.Count}");
+    //        for (int i = 0; i < objHit.Count; i++)
+    //        {
+    //            if (i + 1 < objHit.Count)
+    //            {
+    //                print($"distancia dos obj {Vector3.Distance(objHit[i].transform.position, objHit[i + 1].transform.position)}");
+    //                if (Vector3.Distance(objHit[i].transform.position, objHit[i + 1].transform.position) > distanceJump && isChange == false)
+    //                {
+    //                    isChange = true;
+    //                    objHit.Clear();
+    //                    if (RandIA(50) == true)
+    //                    {
+    //                        OnStateEnter(EnemyState.JUMP);
+    //                    }
+    //                    else
+    //                    {
+    //                        CheckLane();
+    //                        OnStateEnter(EnemyState.DIVERT);
+    //                    }
+    //                }
+    //                else
+    //                {
+    //                    CheckLane();
+    //                    OnStateEnter(EnemyState.DIVERT);
+    //                }
+    //            }
+    //            else
+    //            {
+    //                CheckLane();
+    //                OnStateEnter(EnemyState.DIVERT);
+    //            }
+    //        }
 
-            if (Vector3.Distance(transform.position, other.transform.position) <= distanceJump && isChange == false)
-            {
-                isChange = true;
+    //        //        if (Vector3.Distance(transform.position, other.transform.position) <= distanceJump && isChange == false)
+    //        //        {
+    //        //            isChange = true;
 
-                if (RandIA(50) == true)
-                {
-                    OnStateEnter(EnemyState.JUMP);
-                }
-                else
-                {
-                    CheckLane();
-                    OnStateEnter(EnemyState.DIVERT);
-                }
-            }
-        }
-    }
+    //        //            if (RandIA(50) == true)
+    //        //            {
+    //        //                OnStateEnter(EnemyState.JUMP);
+    //        //            }
+    //        //            else
+    //        //            {
+    //        //                CheckLane();
+    //        //                OnStateEnter(EnemyState.DIVERT);
+    //        //            }
+    //        //        }
+    //    }
+    //}
 
     // dectção de colisões frente e trás
     void RayCastVertical()
@@ -89,21 +122,24 @@ public class IAEnemy : MonoBehaviour
         //frente
         if (Physics.Raycast(transform.position + Vector3.up, transform.forward, out hit_info, rayDistance))
         {
-            //print($"{hit_info.distance}");
-            //if (hit_info.collider.tag == "Obstacle" /*&& RandIA(percentage_ia) == true*/)
-            //{
-            //    if (hit_info.transform.name.Equals("Bus(Clone)"))
-            //    {
-            //        //print(hit_info.transform.name);
-            //        //print(hit_info.distance);
-            //        //OnStateEnter(EnemyState.DIVERT);
-            //    }
-
-            //    if (hit_info.distance >= 1.4f && hit_info.distance <= 9f)
-            //    {
-            //        OnStateEnter(EnemyState.JUMP);
-            //    }
-            //}
+            if (hit_info.collider.tag == "Obstacle" && RandIA(percentage_ia) == true)
+            {
+                if (hit_info.transform.name.Equals("Bus(Clone)"))
+                {
+                    CheckLane();
+                    OnStateEnter(EnemyState.DIVERT);
+                }
+                else if (Vector3.Distance(hit_info.transform.position, transform.position) <= distanceJump && Vector3.Distance(hit_info.transform.position, transform.position) >= 8f && isChange == false)
+                {
+                    isChange = true;
+                    OnStateEnter(EnemyState.JUMP);
+                }
+            }
+            else
+            {
+                CheckLane();
+                OnStateEnter(EnemyState.DIVERT);
+            }
 
             if (hit_info.collider.tag == "Player" && RandIA(percentage_ia) == true && hit_info.distance >= 3)
             {
@@ -226,7 +262,10 @@ public class IAEnemy : MonoBehaviour
                 break;
 
             case EnemyState.PUSH:
-                StartCoroutine(PushEstate());
+                if (enemyRun.speed > 12)
+                {
+                    StartCoroutine(PushEstate());
+                }
                 break;
 
             case EnemyState.DIVERT:
@@ -237,9 +276,9 @@ public class IAEnemy : MonoBehaviour
 
     public void CheckLane()
     {
-        if(enemyRun.currentLane + 2 < 6 && enemyRun.currentLane - 2 > -2)
+        if (enemyRun.currentLane + 2 < 6 && enemyRun.currentLane - 2 > -2)
         {
-            if(RandIA(50) == true)
+            if (RandIA(50) == true)
             {
                 side = "right";
             }
@@ -248,11 +287,11 @@ public class IAEnemy : MonoBehaviour
                 side = "left";
             }
         }
-        else if(enemyRun.currentLane - 2 < -2)
+        else if (enemyRun.currentLane - 2 < -2)
         {
             side = "right";
         }
-        else if(enemyRun.currentLane + 2 > 6)
+        else if (enemyRun.currentLane + 2 > 6)
         {
             side = "left";
         }
@@ -322,7 +361,7 @@ public class IAEnemy : MonoBehaviour
     //funções da ia tiro
     IEnumerator FireState()
     {
-        spawnProjectile.SpawnFx();
+        spawnProjectile.SpawnFx(enemyRun.speed);
         yield return new WaitForSeconds(delay_ia);
         isChange = false;
     }

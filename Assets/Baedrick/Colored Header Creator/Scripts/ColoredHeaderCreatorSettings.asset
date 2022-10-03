@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d31ccecf16173714483a8de8b6a04b4e, type: 3}
   m_Name: ColoredHeaderCreatorSettings
   m_EditorClassIdentifier: 
-  headerText: New Header
-  headerColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  editorOnly: 1
+  headerText: Gameplay
+  headerColor: {r: 0.20462713, g: 1, b: 0.02352941, a: 1}
+  editorOnly: 0
   textAlignmentOptions: 0
   fontStyleOptions: 0
   fontSize: 12
