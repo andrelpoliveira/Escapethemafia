@@ -209,7 +209,7 @@ public class EnemyRun : MonoBehaviour
         canMove = true;
         while (timer < time && invencible)
         {
-            Shader.SetGlobalFloat(blinkingValue, currentBlink);
+            //Shader.SetGlobalFloat(blinkingValue, currentBlink);
             yield return null;
             timer += Time.deltaTime;
             lastBlink += Time.deltaTime;
@@ -219,7 +219,7 @@ public class EnemyRun : MonoBehaviour
                 currentBlink = 1f - currentBlink;
             }
         }
-        Shader.SetGlobalFloat(blinkingValue, 0);
+        //Shader.SetGlobalFloat(blinkingValue, 0);
         invencible = false;
     }
     IEnumerator CountStart()

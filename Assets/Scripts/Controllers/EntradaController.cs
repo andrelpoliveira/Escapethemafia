@@ -9,6 +9,7 @@ public class EntradaController : MonoBehaviour
     [Header("UI's")]
     public GameObject fadeInPanel;
     public GameObject painelMission;
+    public Animator painelSettings;
     public TMP_Text[] description, reward, progress;
     public TMP_Text coinsTxt, costTxt;
     public GameObject[] rewardButton;
@@ -19,7 +20,7 @@ public class EntradaController : MonoBehaviour
     private int characterIndex = 0;
     AudioManager audio_manager;
     GameController game_controller;
-
+    private bool settingOpen;
 
     private void Start()
     {
@@ -56,7 +57,7 @@ public class EntradaController : MonoBehaviour
         }
 
     }
-    //Definição das missões
+    //Definiï¿½ï¿½o das missï¿½es
     public void SetMission()
     {
         for (int i = 0; i < 2; i++)
@@ -87,7 +88,7 @@ public class EntradaController : MonoBehaviour
         rewardButton[missionIndex].SetActive(false);
         game_controller.GenerateMission(missionIndex);
     }
-    //Seleção de Personagens
+    //Seleï¿½ï¿½o de Personagens
     public void ChangeCharacter(int index)
     {
         characterIndex += index;
@@ -120,5 +121,11 @@ public class EntradaController : MonoBehaviour
             costTxt.text = "Selected";
             btn_message.SetActive(false);
         }
+    }
+
+    public void ControlSettings()
+    {
+        settingOpen = !settingOpen;
+        if(settingOpen) { painelSettings.SetTrigger("On"); } else { painelSettings.SetTrigger("Off"); }
     }
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3929213330068843668}
   - component: {fileID: 1253032026964711518}
   - component: {fileID: 1424362481531540744}
+  - component: {fileID: 3711589502102486365}
   m_Layer: 0
   m_Name: Barreira4x
   m_TagString: Obstacle
@@ -95,3 +96,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.9848976, y: 0.61074036, z: 1.1881932}
   m_Center: {x: -0.011880875, y: 0.0006052255, z: -0.25165907}
+--- !u!114 &3711589502102486365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748536028994009483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a44ad99618ea3d4eaf50f49db4f4801, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

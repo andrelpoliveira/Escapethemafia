@@ -80,7 +80,7 @@ public class PlayerRun : MonoBehaviour
         smokeRun.SetActive(false);
         invencible_time_start = invencibleTime;
         StartRun();
-
+        
     }
 
     // Update is called once per frame
@@ -321,7 +321,7 @@ public class PlayerRun : MonoBehaviour
         canMove = true;
         while (timer < time && invencible)
         {
-            Shader.SetGlobalFloat(blinkingValue, currentBlink);
+            //Shader.SetGlobalFloat(blinkingValue, currentBlink);
             yield return null;
             timer += Time.deltaTime;
             lastBlink += Time.deltaTime;
@@ -331,7 +331,7 @@ public class PlayerRun : MonoBehaviour
                 currentBlink = 1f - currentBlink;
             }
         }
-        Shader.SetGlobalFloat(blinkingValue, 0);
+        //Shader.SetGlobalFloat(blinkingValue, 0);
         invencible = false;
     }
     IEnumerator CountStart()
@@ -339,6 +339,7 @@ public class PlayerRun : MonoBehaviour
         anim.SetBool("Idle", true);
         anim.SetBool("Run", false);
         yield return new WaitForSeconds(3f);
+        audio_manager.PlayFx(audio_manager.fx_running);
         speed = minSpeed;
         canMove = true;
     }
