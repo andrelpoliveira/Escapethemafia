@@ -23,6 +23,8 @@ public class PlayerRun : MonoBehaviour
 
     [Header("Efeitos")]
     public GameObject smokeRun;
+    public GameObject shield;
+    public GameObject model;
 
     //Controle de Animação e Audio
     private Animator anim;
@@ -40,7 +42,7 @@ public class PlayerRun : MonoBehaviour
     //Life atual do player
     public int currentLife;
     private bool invencible = false;
-    static int blinkingValue;
+    //static int blinkingValue;
     //Script
     public UiManager uiManager;
     public SpawnProjectile spawnProjectile;
@@ -73,11 +75,12 @@ public class PlayerRun : MonoBehaviour
         game_controller = GameController._gameController;
         //Seta as variáveis iniciais
         currentLife = maxLife;
-        blinkingValue = Shader.PropertyToID("_BlinkingValue");
+        //blinkingValue = Shader.PropertyToID("_BlinkingValue");
         //Start das missões
         game_controller.StartMissions();
         //Inicio do game
         smokeRun.SetActive(false);
+        shield.SetActive(false);
         invencible_time_start = invencibleTime;
         StartRun();
         
@@ -317,10 +320,12 @@ public class PlayerRun : MonoBehaviour
         float currentBlink = 1f;
         float lastBlink = 0;
         float blinkPeriod = 0.1f;
+        bool enabled = false;
         yield return new WaitForSeconds(0.5f);
         canMove = true;
         while (timer < time && invencible)
         {
+            model.SetActive(enabled);
             //Shader.SetGlobalFloat(blinkingValue, currentBlink);
             yield return null;
             timer += Time.deltaTime;
@@ -329,8 +334,11 @@ public class PlayerRun : MonoBehaviour
             {
                 lastBlink = 0;
                 currentBlink = 1f - currentBlink;
+                enabled = !enabled;
             }
         }
+
+        model.SetActive(true);
         //Shader.SetGlobalFloat(blinkingValue, 0);
         invencible = false;
     }
