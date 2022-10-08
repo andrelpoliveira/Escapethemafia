@@ -1522,10 +1522,13 @@ MonoBehaviour:
   shield: {fileID: 2716815002239954285}
   model: {fileID: 3981987302844753733}
   currentLife: 0
+  invencible: 0
   uiManager: {fileID: 0}
   spawnProjectile: {fileID: 0}
   coin: 0
   score: 0
+  shields: 2
+  run: 2
 --- !u!1 &8832605678780098523
 GameObject:
   m_ObjectHideFlags: 0

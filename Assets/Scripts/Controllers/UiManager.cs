@@ -15,6 +15,8 @@ public class UiManager : MonoBehaviour
     public TMP_Text scoreText;
     public Button btnShield;
     public Button btnRun2;
+    public TMP_Text tmpRun;
+    public TMP_Text tmpShield;
 
     [Header("---Game Win---")]
     public TMP_Text score_text;
@@ -53,6 +55,14 @@ public class UiManager : MonoBehaviour
     {
         tmpCoins.text = coin.ToString();
     }
+    public void UpdateRuns(int run)
+    {
+        tmpRun.text = "X" + run.ToString();
+    }
+    public void UpdateShield(int shield)
+    {
+        tmpShield.text = "X" + shield.ToString();
+    }
     public void SceneEntrada()
     {
         GameController._gameController.coins += _playerRun.coin;
@@ -68,5 +78,15 @@ public class UiManager : MonoBehaviour
     {
         score_text.text = $"Socre: {score.ToString("N0")} M";
         coin_text.text = coin.ToString();
+    }
+
+    public void StartShield()
+    {
+        _playerRun.ShieldActive();
+    }
+
+    public void StartRun()
+    {
+        _playerRun.IncreaseRun();
     }
 }

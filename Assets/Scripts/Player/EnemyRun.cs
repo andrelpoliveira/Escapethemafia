@@ -276,7 +276,6 @@ public class EnemyRun : MonoBehaviour
                 speed = player_run.speed + speed_range;
             }
         }
-        print($"distancia do player {Vector3.Distance(transform.position, player_run.transform.position)} {gameObject.name}");
     }
 
     public void Endgame()

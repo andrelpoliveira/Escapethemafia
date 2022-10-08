@@ -37,8 +37,9 @@ public class Explode : MonoBehaviour
                     if (rb != null)
                     {
                         rb.AddExplosionForce(Random.Range(explosionMinForce, explosionMaxForce), originalObject.transform.position, explosionForceRadius);
+                        StartCoroutine(Shrink(t, delay));
                     }
-                    StartCoroutine(Shrink(t, delay));
+                    
                 }
 
                 Destroy(fractObj, 3);
@@ -46,7 +47,7 @@ public class Explode : MonoBehaviour
                 if (explosionVFX != null)
                 {
                     GameObject exploVFX = Instantiate(explosionVFX) as GameObject;
-                    Destroy(exploVFX, 7);
+                    Destroy(exploVFX, 20 + delay);
                 }
 
                 if (coinObj != null)
@@ -65,8 +66,9 @@ public class Explode : MonoBehaviour
 
     IEnumerator Shrink(Transform t, float delay)
     {
-        yield return new WaitForSeconds(delay);
-
+        print($"nome {t.name} transform {t}");
+        yield return new WaitForSeconds(2f);
+        print($"nome {t.name} transform {t}");
         Vector3 newScale = t.localScale;
 
         while (newScale.x >= 0)
