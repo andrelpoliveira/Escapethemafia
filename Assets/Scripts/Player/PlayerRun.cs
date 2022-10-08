@@ -26,6 +26,9 @@ public class PlayerRun : MonoBehaviour
     public GameObject shield;
     public GameObject model;
 
+    //Itens de UI
+    private Button btnShield;
+    private Button btnRun2;
     //Controle de Animação e Audio
     private Animator anim;
     //Controle de Rigibody
@@ -75,6 +78,8 @@ public class PlayerRun : MonoBehaviour
         uiManager = FindObjectOfType<UiManager>();
         audio_manager = AudioManager.instance;
         game_controller = GameController._gameController;
+        btnShield = uiManager.btnShield;
+        btnRun2 = uiManager.btnRun2;
         //Seta as variáveis iniciais
         currentLife = maxLife;
         //blinkingValue = Shader.PropertyToID("_BlinkingValue");

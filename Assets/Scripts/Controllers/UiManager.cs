@@ -13,6 +13,8 @@ public class UiManager : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject gameWinPanel;
     public TMP_Text scoreText;
+    public Button btnShield;
+    public Button btnRun2;
 
     [Header("---Game Win---")]
     public TMP_Text score_text;
