@@ -6,12 +6,12 @@ using TMPro;
 
 public class AdsController : MonoBehaviour, IUnityAdsInitializationListener, IUnityAdsLoadListener, IUnityAdsShowListener
 {
-    private string player_store_id = "4837195";
-    private string app_store_id = "4837194";
+    private string player_store_id = "4913531";
+    private string app_store_id = "4913530";
     private string system;
-    private string name_interaction;
 
     public bool is_test_ads;
+    private PlayerRun player_run;
 
     // Start is called before the first frame update
     void Start()
@@ -20,8 +20,7 @@ public class AdsController : MonoBehaviour, IUnityAdsInitializationListener, IUn
         {
             Initialized();
         }
-        
-        DontDestroyOnLoad(this.gameObject);
+        player_run = FindObjectOfType(typeof(PlayerRun)) as PlayerRun;
     }
 
     public void Initialized()
@@ -51,6 +50,8 @@ public class AdsController : MonoBehaviour, IUnityAdsInitializationListener, IUn
     // ads exibido com sucesso
     public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
     {
+        GameController._gameController.is_continue = true;
+        GameController._gameController.RestartGame();
         Time.timeScale = 1;
     }
 
@@ -79,9 +80,8 @@ public class AdsController : MonoBehaviour, IUnityAdsInitializationListener, IUn
     }
 
     // ---meus metodos---
-    public void PlayVideoAds(string name)
+    public void PlayVideoAds()
     {
-        name_interaction = name;
         Advertisement.Load("Rewarded_Android", this);
     }
 }

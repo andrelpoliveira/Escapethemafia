@@ -47,9 +47,9 @@ public class PlayerRun : MonoBehaviour
     AudioManager audio_manager;
     GameController game_controller;
     //Coletáveis
-    [HideInInspector]
+    //[HideInInspector]
     public int coin;
-    [HideInInspector]
+    //[HideInInspector]
     public float score;
     //Controle de Movimento
     private bool canMove = false;
@@ -60,6 +60,8 @@ public class PlayerRun : MonoBehaviour
     private bool is_push;
     private int push_value;
     RaycastHit hit_info_test;
+    // controle de gameover
+    private bool is_gameover;
 
     // Start is called before the first frame update
     void Start()
@@ -80,7 +82,11 @@ public class PlayerRun : MonoBehaviour
         smokeRun.SetActive(false);
         invencible_time_start = invencibleTime;
         StartRun();
-        
+        is_gameover = false;
+        coin = game_controller.temp_coins;
+        score = game_controller.temp_score;
+        uiManager.UpdateCoins(coin);
+        uiManager.UpdateScore((int)score);
     }
 
     // Update is called once per frame
@@ -184,12 +190,12 @@ public class PlayerRun : MonoBehaviour
             time_current = 0;
         }
 
-        RaycastHit hit_info;
+        //RaycastHit hit_info;
 
-        if (!Physics.Raycast(transform.position + Vector3.up, -transform.up, out hit_info, 5))
-        {
-            Endgame();
-        }
+        //if (!Physics.Raycast(transform.position + Vector3.up, -transform.up, out hit_info, 5))
+        //{
+        //    Endgame();
+        //}
 
     }
 
@@ -304,7 +310,7 @@ public class PlayerRun : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.tag == "Player" && is_push == true)
+        if (collision.transform.tag == "Enemy" && is_push == true)
         {
             collision.transform.GetComponent<EnemyRun>().Divert(push_value);
         }
@@ -360,8 +366,10 @@ public class PlayerRun : MonoBehaviour
     }
     public void Endgame()
     {
+        if (is_gameover == true) { return; }
         print("player");
-        game_controller.coins += coin;
+        game_controller.temp_coins = coin;
+        game_controller.temp_score = score;
         audio_manager.PlayMusic(audio_manager.game_over, false);
         speed = 0;
         canMove = false;
@@ -370,8 +378,10 @@ public class PlayerRun : MonoBehaviour
         smokeRun.SetActive(false);
         uiManager.gameOverPanel.SetActive(true);
         Time.timeScale = 0;
+        is_gameover = true;
+        game_controller.is_continue = false;
     }
-
+ 
     public void WinGame()
     {
         game_controller.coins += coin;
