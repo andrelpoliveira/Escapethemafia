@@ -24,6 +24,16 @@ public class Track1 : MonoBehaviour
     public Vector2 numberOfAmmunition;
     public List<GameObject> newAmunnitions;
 
+    [Header("Shield")]
+    public GameObject shield;
+    public Vector2 numberOfShield;
+    public List<GameObject> newShields;
+
+    [Header("Run")]
+    public GameObject run;
+    public Vector2 numberOfRun;
+    public List<GameObject> newRuns;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +41,8 @@ public class Track1 : MonoBehaviour
         int newNumberOfCoins = (int)Random.Range(numberOfCoins.x, numberOfCoins.y);
         int newNumberOfHearts = (int)Random.Range(numberOfHearts.x, numberOfHearts.y);
         int newNumberOfAmunnitions = (int)Random.Range(numberOfAmmunition.x, numberOfAmmunition.y);
+        int newNumberOfShields = (int)Random.Range(numberOfShield.x, numberOfShield.y);
+        int newNumberOfRuns = (int)Random.Range(numberOfRun.x, numberOfRun.y);
 
         for (int i = 0; i < newNumberOfObstacles; i++)
         {
@@ -52,11 +64,23 @@ public class Track1 : MonoBehaviour
             newAmunnitions.Add(Instantiate(ammunition, transform));
             newAmunnitions[i].SetActive(false);
         }
+        for (int i = 0; i < newNumberOfShields; i++)
+        {
+            newShields.Add(Instantiate(shield, transform));
+            newShields[i].SetActive(false);
+        }
+        for (int i = 0; i < newNumberOfRuns; i++)
+        {
+            newRuns.Add(Instantiate(run, transform));
+            newRuns[i].SetActive(false);
+        }
 
         PositionObstacles();
         PositionCoins();
         PositionHearts();
         PositionAmmunitions();
+        PositionShields();
+        PositionRuns();
     }
     //Positionamento dos obstáculos fixos
     void PositionObstacles()
@@ -117,6 +141,34 @@ public class Track1 : MonoBehaviour
             minZPos = randomZPos + 1;
         }
     }
+    void PositionShields()
+    {
+        float minZPos = 20f;
+
+        for (int i = 0; i < newShields.Count; i++)
+        {
+            float maxZPos = minZPos + 30f;
+            float randomZPos = Random.Range(minZPos, maxZPos);
+            newShields[i].transform.localPosition = new Vector3(transform.position.x, 1, randomZPos);
+            newShields[i].SetActive(true);
+            newShields[i].GetComponent<ChangeLane>().PositionLane();
+            minZPos = randomZPos + 1;
+        }
+    }
+    void PositionRuns()
+    {
+        float minZPos = 20f;
+
+        for (int i = 0; i < newRuns.Count; i++)
+        {
+            float maxZPos = minZPos + 30f;
+            float randomZPos = Random.Range(minZPos, maxZPos);
+            newRuns[i].transform.localPosition = new Vector3(transform.position.x, 1, randomZPos);
+            newRuns[i].SetActive(true);
+            newRuns[i].GetComponent<ChangeLane>().PositionLane();
+            minZPos = randomZPos + 1;
+        }
+    }
     //Reposicionamento dos tracks
     private void OnTriggerEnter(Collider other)
     {
@@ -127,6 +179,8 @@ public class Track1 : MonoBehaviour
             PositionCoins();
             PositionHearts();
             PositionAmmunitions();
+            PositionShields();
+            PositionRuns();
         }
     }
 }

@@ -16,6 +16,7 @@ public class PlayerRun : MonoBehaviour
     public int maxLife = 4;
     public float minSpeed = 10f;
     //public float maxSpeed = 20f;
+    private float speedAtual;
     public float invencibleTime;
     private float invencible_time_start;
     // conttole de para aumento de velocidade
@@ -44,7 +45,7 @@ public class PlayerRun : MonoBehaviour
     private Vector2 startTouch;
     //Life atual do player
     public int currentLife;
-    private bool invencible = false;
+    public bool invencible = false;
     //static int blinkingValue;
     //Script
     public UiManager uiManager;
@@ -56,6 +57,8 @@ public class PlayerRun : MonoBehaviour
     public int coin;
     //[HideInInspector]
     public float score;
+    public int shields;
+    public int run;
     //Controle de Movimento
     private bool canMove = false;
     // controle de tempo 
@@ -95,6 +98,8 @@ public class PlayerRun : MonoBehaviour
         score = game_controller.temp_score;
         uiManager.UpdateCoins(coin);
         uiManager.UpdateScore((int)score);
+        uiManager.UpdateShield(shields);
+        uiManager.UpdateRuns(run);
     }
 
     // Update is called once per frame
@@ -122,10 +127,6 @@ public class PlayerRun : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            if (Physics.Raycast(transform.position + Vector3.up, transform.forward, out hit_info_test, 10))
-            {
-                print(hit_info_test.distance);
-            }
             Jump();
         }
         /* ----- Inputs para PC FIM -----*/
@@ -298,10 +299,20 @@ public class PlayerRun : MonoBehaviour
                 other.gameObject.SetActive(false);
             }
         }
+        if (other.tag == "Run")
+        {
+            run++;
+            uiManager.UpdateRuns(run);
+            other.gameObject.SetActive(false);
+        }
+        if (other.tag == "Shield")
+        {
+            shields++;
+            uiManager.UpdateShield(shields);
+            other.gameObject.SetActive(false);
+        }
 
-        if (invencible) { return; }
-
-        if (other.tag == "Obstacle")
+        if (other.tag == "Obstacle" && invencible == false)
         {
             Damage();
 
@@ -362,9 +373,38 @@ public class PlayerRun : MonoBehaviour
         speed = minSpeed;
         canMove = true;
     }
+    IEnumerator Shield()
+    {
+        invencible = true;
+        shield.SetActive(true);
+        btnShield.interactable = false;
+        yield return new WaitForSeconds(10f);
+        invencible = false;
+        shield.SetActive(false);
+        btnShield.interactable = true;
+    }
+    IEnumerator RunSpeed()
+    {
+        speedAtual = speed;
+        speed *= 2.0f;
+        btnRun2.interactable = false;
+        yield return new WaitForSeconds(4f);
+        speed = speedAtual;
+        btnRun2.interactable = true;
+    }
+    public void ShieldActive()
+    {
+        if(shields > 0)
+        {
+            shields--;
+            uiManager.UpdateShield(shields);
+            StartCoroutine(Shield());
+        }
+        
+    }
     public void Damage()
     {
-        print("errou pulo");
+        if(invencible) { return; }
         currentLife--;
         //canMove = false;
         uiManager.UpdateLife(currentLife);
@@ -413,6 +453,17 @@ public class PlayerRun : MonoBehaviour
     {
         speed *= 1.2f;
         invencibleTime *= 0.82f;
+    }
+
+    public void IncreaseRun()
+    {
+        if(run > 0)
+        {
+            run--;
+            uiManager.UpdateRuns(run);
+            StartCoroutine(RunSpeed());
+        }
+        
     }
 
     public void Divert(int value)

@@ -41,7 +41,7 @@ public class ProjectileMove : MonoBehaviour
     {
         if(collision.transform.tag == "Player" || collision.transform.tag == "Enemy")
         {
-            if(collision.transform.GetComponent<PlayerRun>() != null)
+            if(collision.transform.GetComponent<PlayerRun>() != null && collision.transform.GetComponent<PlayerRun>().invencible == false)
             {
                 collision.transform.GetComponent<PlayerRun>().Damage();
                 print("dano no player");
