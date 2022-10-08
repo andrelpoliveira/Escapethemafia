@@ -26,6 +26,7 @@ public class EnemyRun : MonoBehaviour
 
     [Header("Efeitos")]
     public GameObject smokeRun;
+    public GameObject model;
     //Controle de Animação e Audio
     private Animator anim;
     //Controle de Rigibody
@@ -201,7 +202,9 @@ public class EnemyRun : MonoBehaviour
 
         if (other.tag == "Obstacle" && Vector3.Distance(transform.position, other.transform.position) <= 2)
         {
+            print("entrou");
             //LostSpeed();
+            StartCoroutine(Blinking(invencibleTime));
         }
     }
     IEnumerator Blinking(float time)
@@ -211,10 +214,12 @@ public class EnemyRun : MonoBehaviour
         float currentBlink = 1f;
         float lastBlink = 0;
         float blinkPeriod = 0.1f;
+        bool enabled = false;
         yield return new WaitForSeconds(0.5f);
         canMove = true;
         while (timer < time && invencible)
         {
+            model.SetActive(enabled);
             //Shader.SetGlobalFloat(blinkingValue, currentBlink);
             yield return null;
             timer += Time.deltaTime;
@@ -223,8 +228,11 @@ public class EnemyRun : MonoBehaviour
             {
                 lastBlink = 0;
                 currentBlink = 1f - currentBlink;
+                enabled = !enabled;
             }
         }
+
+        model.SetActive(true);
         //Shader.SetGlobalFloat(blinkingValue, 0);
         invencible = false;
     }
@@ -276,7 +284,6 @@ public class EnemyRun : MonoBehaviour
                 speed = player_run.speed + speed_range;
             }
         }
-        print($"distancia do player {Vector3.Distance(transform.position, player_run.transform.position)} {gameObject.name}");
     }
 
     public void Endgame()

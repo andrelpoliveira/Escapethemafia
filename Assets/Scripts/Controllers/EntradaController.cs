@@ -128,4 +128,16 @@ public class EntradaController : MonoBehaviour
         settingOpen = !settingOpen;
         if(settingOpen) { painelSettings.SetTrigger("On"); } else { painelSettings.SetTrigger("Off"); }
     }
+
+    //chama paginas de intert
+    public void Facebook()
+    {
+        Application.OpenURL("https://www.google.com/");
+    }
+
+    //chama saida do jogo
+    public void Exit()
+    {
+        Application.Quit();
+    }
 }

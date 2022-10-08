@@ -1721,6 +1721,7 @@ MonoBehaviour:
   speed_range: 2
   distance_range: 50
   smokeRun: {fileID: 8867521952822582968}
+  model: {fileID: 3981987302844753733}
   currentLane: 2
   currentLife: 0
   spawnProjectile: {fileID: 0}

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class AudioManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource music;
     public AudioSource fx;
+    //texto para ui
+    public TMP_Text text_cancel;
 
     [Header("Music")]
     //public AudioClip title;
@@ -24,6 +27,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip fx_running;
     public AudioClip fx_heart;
 
+    public bool is_mute;
     //[Space]
     //[Header("Speak")]
     //public AudioClip fx_its_me;
@@ -33,7 +37,7 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance != null && instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(this.gameObject);
             return;
@@ -44,18 +48,34 @@ public class AudioManager : MonoBehaviour
     }
 
     // MEUS METODOS
+    //toca musicas
     public void PlayMusic(AudioClip clip, bool loop)
     {
-        music.loop = loop;
-        music.clip = clip;
-        music.Play();
+        if (is_mute == false)
+        {
+            music.loop = loop;
+            music.clip = clip;
+            music.Play();
+        }
     }
 
+    //toca efeitos
     public void PlayFx(AudioClip clip)
     {
-        fx.PlayOneShot(clip);
+        if (is_mute == false)
+        {
+            fx.PlayOneShot(clip);
+        }
     }
 
+    //tira som
+    public void Mute()
+    {
+        is_mute = !is_mute;
+        music.mute = !music.mute;
+        fx.mute = !fx.mute;
+        text_cancel.gameObject.SetActive(!text_cancel.gameObject.activeSelf);
+    }
     //public IEnumerator ChangeMusic()
     //{
     //    PlayMusic(intro_stage, false);
