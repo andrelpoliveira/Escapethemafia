@@ -15,6 +15,7 @@ public class EntradaController : MonoBehaviour
     public GameObject[] rewardButton;
     public GameObject[] characters;
     public GameObject btn_message;
+    public TMP_Text text_cancel;
 
     //Controle dos Personagens
     private int characterIndex = 0;
@@ -31,7 +32,7 @@ public class EntradaController : MonoBehaviour
         SetMission();
         Updatecoins(game_controller.coins);
         audio_manager.PlayMusic(audio_manager.start_game, true);
-        
+
         if (game_controller.characterCost[characterIndex] == 0)
         {
             costTxt.text = "Selected";
@@ -126,7 +127,16 @@ public class EntradaController : MonoBehaviour
     public void ControlSettings()
     {
         settingOpen = !settingOpen;
-        if(settingOpen) { painelSettings.SetTrigger("On"); } else { painelSettings.SetTrigger("Off"); }
+        if (settingOpen) { painelSettings.SetTrigger("On"); } else { painelSettings.SetTrigger("Off"); }
+
+        if (audio_manager.is_mute)
+        {
+            text_cancel.gameObject.SetActive(true);
+        }
+        else
+        {
+            text_cancel.gameObject.SetActive(false);
+        }
     }
 
     //chama paginas de intert
@@ -139,5 +149,22 @@ public class EntradaController : MonoBehaviour
     public void Exit()
     {
         Application.Quit();
+    }
+
+    //tira som
+    public void Mute()
+    {
+        audio_manager.is_mute = !audio_manager.is_mute;
+        audio_manager.music.mute = !audio_manager.music.mute;
+        audio_manager.fx.mute = !audio_manager.fx.mute;
+
+        if (audio_manager.is_mute)
+        {
+            text_cancel.gameObject.SetActive(true);
+        }
+        else
+        {
+            text_cancel.gameObject.SetActive(false);
+        }
     }
 }

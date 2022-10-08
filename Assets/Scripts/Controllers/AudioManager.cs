@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+
 
 public class AudioManager : MonoBehaviour
 {
@@ -9,8 +9,6 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource music;
     public AudioSource fx;
-    //texto para ui
-    public TMP_Text text_cancel;
 
     [Header("Music")]
     //public AudioClip title;
@@ -26,7 +24,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] fx_fire;
     public AudioClip fx_running;
     public AudioClip fx_heart;
-
+    [HideInInspector]
     public bool is_mute;
     //[Space]
     //[Header("Speak")]
@@ -67,15 +65,7 @@ public class AudioManager : MonoBehaviour
             fx.PlayOneShot(clip);
         }
     }
-
-    //tira som
-    public void Mute()
-    {
-        is_mute = !is_mute;
-        music.mute = !music.mute;
-        fx.mute = !fx.mute;
-        text_cancel.gameObject.SetActive(!text_cancel.gameObject.activeSelf);
-    }
+ 
     //public IEnumerator ChangeMusic()
     //{
     //    PlayMusic(intro_stage, false);

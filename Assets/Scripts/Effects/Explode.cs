@@ -66,9 +66,7 @@ public class Explode : MonoBehaviour
 
     IEnumerator Shrink(Transform t, float delay)
     {
-        print($"nome {t.name} transform {t}");
         yield return new WaitForSeconds(2f);
-        print($"nome {t.name} transform {t}");
         Vector3 newScale = t.localScale;
 
         while (newScale.x >= 0)

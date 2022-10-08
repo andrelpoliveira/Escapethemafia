@@ -202,7 +202,6 @@ public class EnemyRun : MonoBehaviour
 
         if (other.tag == "Obstacle" && Vector3.Distance(transform.position, other.transform.position) <= 2)
         {
-            print("entrou");
             //LostSpeed();
             StartCoroutine(Blinking(invencibleTime));
         }
