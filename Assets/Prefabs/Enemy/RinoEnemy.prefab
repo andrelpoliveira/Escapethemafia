@@ -6424,7 +6424,7 @@ GameObject:
   - component: {fileID: 5909669124067215575}
   m_Layer: 0
   m_Name: RinoEnemy
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6520,6 +6520,8 @@ MonoBehaviour:
   time_max: 12
   firepoint: {fileID: 8226093035258835332}
   lifeBar: {fileID: 1812369423901156005}
+  speed_range: 2
+  distance_range: 50
   smokeRun: {fileID: 8226093034630354614}
   currentLane: 2
   currentLife: 0

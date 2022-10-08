@@ -20,6 +20,9 @@ public class EnemyRun : MonoBehaviour
     //controle de HUD
     public Image lifeBar;
 
+    [Header("Variaveis de controle de distancia")]
+    public float speed_range;
+    public float distance_range;
 
     [Header("Efeitos")]
     public GameObject smokeRun;
@@ -41,6 +44,7 @@ public class EnemyRun : MonoBehaviour
     //Script
     public SpawnProjectileEnemy spawnProjectile;
     private IAEnemy iAEnemy;
+    private PlayerRun player_run;
     //Controle de Movimento
     private bool canMove = false;
     // controle de tempo para aumento de velocidade
@@ -55,11 +59,12 @@ public class EnemyRun : MonoBehaviour
         anim = GetComponent<Animator>();
         spawnProjectile = GetComponent<SpawnProjectileEnemy>();
         iAEnemy = GetComponent<IAEnemy>();
+        player_run = FindObjectOfType(typeof(PlayerRun)) as PlayerRun;
         //Seta as variáveis iniciais
         currentLife = maxLife;
         blinkingValue = Shader.PropertyToID("_BlinkingValue");
         //Start das missões
-        GameController._gameController.StartMissions();
+        //GameController._gameController.StartMissions();
         //Inicio do game
         smokeRun.SetActive(false);
         invencible_time_start = invencibleTime;
@@ -112,6 +117,7 @@ public class EnemyRun : MonoBehaviour
     {
         rbPlayer.velocity = Vector3.forward * speed;
         //is_ground = Physics.CheckSphere(transform.position, 0.3f, layer);
+        PlayerDistance();
 
         if (speed > 0 && currentLife > 0)
 
@@ -175,7 +181,7 @@ public class EnemyRun : MonoBehaviour
                 currentLife = 4;
                 StartCoroutine(Blinking(invencibleTime));
             }
-            
+
             lifeBar.fillAmount = (float)(currentLife) / maxLife;
             other.gameObject.SetActive(false);
         }
@@ -195,7 +201,7 @@ public class EnemyRun : MonoBehaviour
 
         if (other.tag == "Obstacle" && Vector3.Distance(transform.position, other.transform.position) <= 2)
         {
-            Damage();
+            //LostSpeed();
         }
     }
     IEnumerator Blinking(float time)
@@ -231,12 +237,14 @@ public class EnemyRun : MonoBehaviour
         speed = minSpeed;
         canMove = true;
     }
+
+    // controle para contar morte para o player
     public void Damage()
     {
         currentLife--;
         lifeBar.fillAmount = (float)(currentLife) / maxLife;
         //canMove = false;
-        speed *= 0.91f;
+        //speed *= 0.91f;
         iAEnemy.distanceJump *= .927f;
         invencibleTime *= 2.5f;
 
@@ -247,18 +255,33 @@ public class EnemyRun : MonoBehaviour
             iAEnemy.distanceJump = 9;
         }
 
-        if (currentLife <= 0)
-        {
-            Endgame();
-        }
-        else
-        {
-            StartCoroutine(Blinking(invencibleTime));
-        }
+        StartCoroutine(Blinking(invencibleTime));
     }
+
+    //controle de distancia do player
+    public void PlayerDistance()
+    {
+        //verifica a distancia do player
+        if(Vector3.Distance(transform.position, player_run.transform.position) > distance_range)
+        {
+            //esta na frente do player
+            if(transform.position.z > player_run.transform.position.z)
+            {
+                speed = player_run.speed - speed_range;
+            }
+
+            //esta atras do player
+            if(transform.position.z < player_run.transform.position.z)
+            {
+                speed = player_run.speed + speed_range;
+            }
+        }
+        print($"distancia do player {Vector3.Distance(transform.position, player_run.transform.position)} {gameObject.name}");
+    }
+
     public void Endgame()
     {
-        if(isGameOver == true) { return; }
+        if (isGameOver == true) { return; }
 
         print("enemy");
         isGameOver = true;

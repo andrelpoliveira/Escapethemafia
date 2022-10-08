@@ -24,6 +24,10 @@ public class GameController : MonoBehaviour
     public static GameController _gameController;
     //Variáveis públicas para armazenamento das missões
     public int coins;
+    //[HideInInspector]
+    public int temp_coins;
+    //[HideInInspector]
+    public float temp_score;
     //Variável de custo dos personagens
     public int[] characterCost;
     public int characterIndex;
@@ -36,6 +40,8 @@ public class GameController : MonoBehaviour
     //controle para vitoria
     private int plrs;
     public PlayerRun plr;
+    //controle para continue
+    public bool is_continue;
     
     private void Awake()
     {
@@ -152,22 +158,27 @@ public class GameController : MonoBehaviour
         }
         
     }
-    void Start()
-    {
-        //scene = SceneManager.GetActiveScene().name;
-    }
+  
     //Start Game
     public void StartGame(int charIndex)
     {
         characterIndex = charIndex;
         StartCoroutine(LoadSceneGame());
-        
     }
     //End Game
     public void EndGame()
     {
+        temp_coins = 0;
+        temp_score = 0;
         StartCoroutine(LoadSceneEntrada());
     }
+
+    //Restart Game
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(sceneName[1]);
+    }
+
     //Corrotina para chamar a fase01
     IEnumerator LoadSceneGame()
     {

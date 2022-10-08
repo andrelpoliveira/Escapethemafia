@@ -53,6 +53,7 @@ public class UiManager : MonoBehaviour
     }
     public void SceneEntrada()
     {
+        GameController._gameController.coins += _playerRun.coin;
         GameController._gameController.EndGame();
         Time.timeScale = 1;
     }

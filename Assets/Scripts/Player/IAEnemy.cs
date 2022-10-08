@@ -114,10 +114,10 @@ public class IAEnemy : MonoBehaviour
     // dectção de colisões frente e trás
     void RayCastVertical()
     {
-        if (!Physics.Raycast(transform.position + Vector3.up, -transform.up, out hit_info, 10))
-        {
-            enemyRun.Endgame();
-        }
+        //if (!Physics.Raycast(transform.position + Vector3.up, -transform.up, out hit_info, 10))
+        //{
+        //    enemyRun.Endgame();
+        //}
 
         //frente
         if (Physics.Raycast(transform.position + Vector3.up, transform.forward, out hit_info, rayDistance))
@@ -141,7 +141,8 @@ public class IAEnemy : MonoBehaviour
                 OnStateEnter(EnemyState.DIVERT);
             }
 
-            if (hit_info.collider.tag == "Player" && RandIA(percentage_ia) == true && hit_info.distance >= 3)
+            if ((hit_info.collider.tag == "Player" || hit_info.collider.tag == "Enemy") && 
+                RandIA(percentage_ia) == true && hit_info.distance >= 3)
             {
                 OnStateEnter(EnemyState.FIRE);
             }

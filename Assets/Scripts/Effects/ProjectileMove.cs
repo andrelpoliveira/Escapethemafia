@@ -39,7 +39,7 @@ public class ProjectileMove : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.transform.tag == "Player")
+        if(collision.transform.tag == "Player" || collision.transform.tag == "Enemy")
         {
             if(collision.transform.GetComponent<PlayerRun>() != null)
             {
