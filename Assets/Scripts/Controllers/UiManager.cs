@@ -13,6 +13,8 @@ public class UiManager : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject gameWinPanel;
     public TMP_Text scoreText;
+    public Button btnShield;
+    public Button btnRun2;
 
     [Header("---Game Win---")]
     public TMP_Text score_text;
@@ -53,6 +55,7 @@ public class UiManager : MonoBehaviour
     }
     public void SceneEntrada()
     {
+        GameController._gameController.coins += _playerRun.coin;
         GameController._gameController.EndGame();
         Time.timeScale = 1;
     }

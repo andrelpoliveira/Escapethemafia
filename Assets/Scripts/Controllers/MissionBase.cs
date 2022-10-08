@@ -24,7 +24,7 @@ public abstract class MissionBase : MonoBehaviour
     public abstract void Update();
     public bool GetMissionComplete()
     {
-        if((progress + currentProgress) >= max)
+        if ((progress + currentProgress) >= max)
         {
             return true;
         }
@@ -55,17 +55,25 @@ public class SingleRun : MissionBase
 
     public override void RunStart()
     {
-        progress = 0;
-        player = FindObjectOfType<PlayerRun>();
+        if (GameController._gameController.is_continue == true)
+        {
+            progress += currentProgress;
+            player = FindObjectOfType<PlayerRun>();
+        }
+        else
+        {
+            progress = 0;
+            player = FindObjectOfType<PlayerRun>();
+        }
     }
 
     public override void Update()
     {
-        if(player == null)
+        if (player == null)
         {
             return;
         }
-        progress = (int)player.score;
+        currentProgress = (int)player.score;
     }
 }
 //Missões Cumulativas de corrida
@@ -84,7 +92,7 @@ public class TotalMeters : MissionBase
 
     public override string GetMissionDescription()
     {
-        return "Accumulate " +max + "M running";
+        return "Accumulate " + max + "M running";
     }
 
     public override void RunStart()
@@ -123,8 +131,16 @@ public class CoinSingleRun : MissionBase
 
     public override void RunStart()
     {
-        progress = 0;
-        player = FindObjectOfType<PlayerRun>();
+        if (GameController._gameController.is_continue == true)
+        {
+            progress += currentProgress;
+            player = FindObjectOfType<PlayerRun>();
+        }
+        else
+        {
+            progress = 0;
+            player = FindObjectOfType<PlayerRun>();
+        }
     }
 
     public override void Update()
@@ -133,6 +149,6 @@ public class CoinSingleRun : MissionBase
         {
             return;
         }
-        progress = (int)player.coin;
+        currentProgress = (int)player.coin;
     }
 }

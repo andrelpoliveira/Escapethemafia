@@ -23,7 +23,12 @@ public class PlayerRun : MonoBehaviour
 
     [Header("Efeitos")]
     public GameObject smokeRun;
+    public GameObject shield;
+    public GameObject model;
 
+    //Itens de UI
+    private Button btnShield;
+    private Button btnRun2;
     //Controle de Animação e Audio
     private Animator anim;
     //Controle de Rigibody
@@ -40,16 +45,16 @@ public class PlayerRun : MonoBehaviour
     //Life atual do player
     public int currentLife;
     private bool invencible = false;
-    static int blinkingValue;
+    //static int blinkingValue;
     //Script
     public UiManager uiManager;
     public SpawnProjectile spawnProjectile;
     AudioManager audio_manager;
     GameController game_controller;
     //Coletáveis
-    [HideInInspector]
+    //[HideInInspector]
     public int coin;
-    [HideInInspector]
+    //[HideInInspector]
     public float score;
     //Controle de Movimento
     private bool canMove = false;
@@ -60,6 +65,8 @@ public class PlayerRun : MonoBehaviour
     private bool is_push;
     private int push_value;
     RaycastHit hit_info_test;
+    // controle de gameover
+    private bool is_gameover;
 
     // Start is called before the first frame update
     void Start()
@@ -71,16 +78,23 @@ public class PlayerRun : MonoBehaviour
         uiManager = FindObjectOfType<UiManager>();
         audio_manager = AudioManager.instance;
         game_controller = GameController._gameController;
+        btnShield = uiManager.btnShield;
+        btnRun2 = uiManager.btnRun2;
         //Seta as variáveis iniciais
         currentLife = maxLife;
-        blinkingValue = Shader.PropertyToID("_BlinkingValue");
+        //blinkingValue = Shader.PropertyToID("_BlinkingValue");
         //Start das missões
         game_controller.StartMissions();
         //Inicio do game
         smokeRun.SetActive(false);
+        shield.SetActive(false);
         invencible_time_start = invencibleTime;
         StartRun();
-        
+        is_gameover = false;
+        coin = game_controller.temp_coins;
+        score = game_controller.temp_score;
+        uiManager.UpdateCoins(coin);
+        uiManager.UpdateScore((int)score);
     }
 
     // Update is called once per frame
@@ -184,12 +198,12 @@ public class PlayerRun : MonoBehaviour
             time_current = 0;
         }
 
-        RaycastHit hit_info;
+        //RaycastHit hit_info;
 
-        if (!Physics.Raycast(transform.position + Vector3.up, -transform.up, out hit_info, 5))
-        {
-            Endgame();
-        }
+        //if (!Physics.Raycast(transform.position + Vector3.up, -transform.up, out hit_info, 5))
+        //{
+        //    Endgame();
+        //}
 
     }
 
@@ -304,7 +318,7 @@ public class PlayerRun : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.tag == "Player" && is_push == true)
+        if (collision.transform.tag == "Enemy" && is_push == true)
         {
             collision.transform.GetComponent<EnemyRun>().Divert(push_value);
         }
@@ -317,10 +331,12 @@ public class PlayerRun : MonoBehaviour
         float currentBlink = 1f;
         float lastBlink = 0;
         float blinkPeriod = 0.1f;
+        bool enabled = false;
         yield return new WaitForSeconds(0.5f);
         canMove = true;
         while (timer < time && invencible)
         {
+            model.SetActive(enabled);
             //Shader.SetGlobalFloat(blinkingValue, currentBlink);
             yield return null;
             timer += Time.deltaTime;
@@ -329,8 +345,11 @@ public class PlayerRun : MonoBehaviour
             {
                 lastBlink = 0;
                 currentBlink = 1f - currentBlink;
+                enabled = !enabled;
             }
         }
+
+        model.SetActive(true);
         //Shader.SetGlobalFloat(blinkingValue, 0);
         invencible = false;
     }
@@ -360,8 +379,10 @@ public class PlayerRun : MonoBehaviour
     }
     public void Endgame()
     {
+        if (is_gameover == true) { return; }
         print("player");
-        game_controller.coins += coin;
+        game_controller.temp_coins = coin;
+        game_controller.temp_score = score;
         audio_manager.PlayMusic(audio_manager.game_over, false);
         speed = 0;
         canMove = false;
@@ -370,8 +391,10 @@ public class PlayerRun : MonoBehaviour
         smokeRun.SetActive(false);
         uiManager.gameOverPanel.SetActive(true);
         Time.timeScale = 0;
+        is_gameover = true;
+        game_controller.is_continue = false;
     }
-
+ 
     public void WinGame()
     {
         game_controller.coins += coin;

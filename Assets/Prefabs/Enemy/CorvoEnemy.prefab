@@ -6324,6 +6324,8 @@ MonoBehaviour:
   time_max: 12
   firepoint: {fileID: 5996170209628363499}
   lifeBar: {fileID: 5744714094870074316}
+  speed_range: 2
+  distance_range: 50
   smokeRun: {fileID: 5996170208172110860}
   currentLane: 2
   currentLife: 0
