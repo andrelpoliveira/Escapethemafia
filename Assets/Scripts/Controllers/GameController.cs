@@ -229,14 +229,14 @@ public class GameController : MonoBehaviour
         FindObjectOfType<EntradaController>().SetMission();
     }
 
-    public void GameWin(int value)
-    {
-        plrs += value;
-        plr = FindObjectOfType(typeof(PlayerRun)) as PlayerRun;
+    //public void GameWin(int value)
+    //{
+    //    plrs += value;
+    //    plr = FindObjectOfType(typeof(PlayerRun)) as PlayerRun;
 
-        if (plrs == 2)
-        {
-            plr.WinGame();
-        }
-    }
+    //    if (plrs == 2)
+    //    {
+    //        plr.WinGame();
+    //    }
+    //}
 }

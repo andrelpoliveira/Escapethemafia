@@ -296,7 +296,7 @@ public class EnemyRun : MonoBehaviour
         anim.SetBool("Idle", true);
         anim.SetBool("Run", false);
         smokeRun.SetActive(false);
-        GameController._gameController.GameWin(1);
+        //GameController._gameController.GameWin(1);
     }
     public void IncreaseSpeed()
     {
