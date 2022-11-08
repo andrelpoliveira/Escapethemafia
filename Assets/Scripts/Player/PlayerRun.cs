@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerRun : MonoBehaviour
@@ -321,7 +322,15 @@ public class PlayerRun : MonoBehaviour
 
             if (currentLife <= 0)
             {
-                Endgame();
+                if (SceneManager.GetActiveScene().name.Equals("TesteGamePlayOnline"))
+                {
+                    NetworkController.instance.Disconect();
+                    Endgame();
+                }
+                else
+                {
+                    Endgame();
+                }
             }
             else
             {

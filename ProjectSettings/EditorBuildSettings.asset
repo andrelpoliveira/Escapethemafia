@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TesteGamePlayFred.unity
     guid: 5d83faeb538090049a0d426a8c2eb1f1
+  - enabled: 1
+    path: Assets/Scenes/TesteGamePlayOnline.unity
+    guid: 03747d794b03f984798d561e491116f3
   m_configObjects: {}
