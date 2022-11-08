@@ -179,11 +179,17 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene(sceneName[1]);
     }
 
+    //troca de cena para o jogo offline
+    public void ChangeScene()
+    {
+        SceneManager.LoadScene(sceneName[1]);
+    }
+
     //Corrotina para chamar a fase01
     IEnumerator LoadSceneGame()
     {
-        yield return new WaitForSeconds(4f);
-        SceneManager.LoadScene(sceneName[1]);
+        yield return new WaitForSeconds(20f);
+        NetworkController.instance.ChangeScene();
     }
     //Corrotina para chamar a Entrada
     IEnumerator LoadSceneEntrada()
@@ -229,14 +235,14 @@ public class GameController : MonoBehaviour
         FindObjectOfType<EntradaController>().SetMission();
     }
 
-    public void GameWin(int value)
-    {
-        plrs += value;
-        plr = FindObjectOfType(typeof(PlayerRun)) as PlayerRun;
+    //public void GameWin(int value)
+    //{
+    //    plrs += value;
+    //    plr = FindObjectOfType(typeof(PlayerRun)) as PlayerRun;
 
-        if (plrs == 2)
-        {
-            plr.WinGame();
-        }
-    }
+    //    if (plrs == 2)
+    //    {
+    //        plr.WinGame();
+    //    }
+    //}
 }

@@ -44,12 +44,10 @@ public class ProjectileMove : MonoBehaviour
             if(collision.transform.GetComponent<PlayerRun>() != null && collision.transform.GetComponent<PlayerRun>().invencible == false)
             {
                 collision.transform.GetComponent<PlayerRun>().Damage();
-                print("dano no player");
             }
             else if (collision.transform.GetComponent<EnemyRun>() != null)
             {
                 collision.transform.GetComponent<EnemyRun>().Damage();
-                print("dano no enemy");
             }
         }
         speed = 0;

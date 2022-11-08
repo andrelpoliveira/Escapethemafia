@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerRun : MonoBehaviour
@@ -46,6 +47,7 @@ public class PlayerRun : MonoBehaviour
     //Life atual do player
     public int currentLife;
     public bool invencible = false;
+    private bool is_shield;
     //static int blinkingValue;
     //Script
     public UiManager uiManager;
@@ -100,6 +102,8 @@ public class PlayerRun : MonoBehaviour
         uiManager.UpdateScore((int)score);
         uiManager.UpdateShield(shields);
         uiManager.UpdateRuns(run);
+        //manter tela ligada do celular
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
 
     // Update is called once per frame
@@ -318,7 +322,15 @@ public class PlayerRun : MonoBehaviour
 
             if (currentLife <= 0)
             {
-                Endgame();
+                if (SceneManager.GetActiveScene().name.Equals("TesteGamePlayOnline"))
+                {
+                    NetworkController.instance.Disconect();
+                    Endgame();
+                }
+                else
+                {
+                    Endgame();
+                }
             }
             else
             {
@@ -362,7 +374,10 @@ public class PlayerRun : MonoBehaviour
 
         model.SetActive(true);
         //Shader.SetGlobalFloat(blinkingValue, 0);
-        invencible = false;
+        if (is_shield == false)
+        {
+            invencible = false;
+        }
     }
     IEnumerator CountStart()
     {
@@ -376,10 +391,12 @@ public class PlayerRun : MonoBehaviour
     IEnumerator Shield()
     {
         invencible = true;
+        is_shield = true;
         shield.SetActive(true);
         btnShield.interactable = false;
         yield return new WaitForSeconds(10f);
         invencible = false;
+        is_shield = false;
         shield.SetActive(false);
         btnShield.interactable = true;
     }
@@ -394,17 +411,17 @@ public class PlayerRun : MonoBehaviour
     }
     public void ShieldActive()
     {
-        if(shields > 0)
+        if (shields > 0)
         {
             shields--;
             uiManager.UpdateShield(shields);
             StartCoroutine(Shield());
         }
-        
+
     }
     public void Damage()
     {
-        if(invencible) { return; }
+        if (invencible) { return; }
         currentLife--;
         //canMove = false;
         uiManager.UpdateLife(currentLife);
@@ -420,7 +437,6 @@ public class PlayerRun : MonoBehaviour
     public void Endgame()
     {
         if (is_gameover == true) { return; }
-        print("player");
         game_controller.temp_coins = coin;
         game_controller.temp_score = score;
         audio_manager.PlayMusic(audio_manager.game_over, false);
@@ -434,20 +450,20 @@ public class PlayerRun : MonoBehaviour
         is_gameover = true;
         game_controller.is_continue = false;
     }
- 
-    public void WinGame()
-    {
-        game_controller.coins += coin;
-        audio_manager.PlayMusic(audio_manager.game_over, false);
-        speed = 0;
-        canMove = false;
-        anim.SetBool("Idle", true);
-        anim.SetBool("Run", false);
-        smokeRun.SetActive(false);
-        uiManager.gameWinPanel.SetActive(true);
-        uiManager.UpdateGameWin(score, coin);
-        Time.timeScale = 0;
-    }
+
+    //public void WinGame()
+    //{
+    //    game_controller.coins += coin;
+    //    audio_manager.PlayMusic(audio_manager.game_over, false);
+    //    speed = 0;
+    //    canMove = false;
+    //    anim.SetBool("Idle", true);
+    //    anim.SetBool("Run", false);
+    //    smokeRun.SetActive(false);
+    //    uiManager.gameWinPanel.SetActive(true);
+    //    uiManager.UpdateGameWin(score, coin);
+    //    Time.timeScale = 0;
+    //}
 
     public void IncreaseSpeed()
     {
@@ -457,13 +473,13 @@ public class PlayerRun : MonoBehaviour
 
     public void IncreaseRun()
     {
-        if(run > 0)
+        if (run > 0)
         {
             run--;
             uiManager.UpdateRuns(run);
             StartCoroutine(RunSpeed());
         }
-        
+
     }
 
     public void Divert(int value)
